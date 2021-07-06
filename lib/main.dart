@@ -1,7 +1,7 @@
 import 'package:filli/Auth/SignupPage.dart';
 import 'package:filli/auth/loginPage.dart';
-import 'package:filli/pages/DrawerScreen.dart';
 import 'package:filli/pages/GeneralScreen.dart';
+import 'package:filli/pages/ProfileScreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +16,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,16 +35,10 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/signup': (BuildContext context) => SignupPage()
+        '/signup': (BuildContext context) => SignupPage(),
+        '/profile': (BuildContext context) => ProfileScreen(),
       },
-      home: Scaffold(
-        body: Stack(
-          children: [
-            DrawerScreen(),
-            GeneralScreen(),
-          ],
-        ),
-      ),
+      home: GeneralScreen(),
     );
   }
 }
