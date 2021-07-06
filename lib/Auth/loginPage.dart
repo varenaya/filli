@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                 tag: 'welcome-image',
                 child: Image(
                   width: size.width * 0.6,
-                  image: AssetImage('assets/icons/hwt_filli.png'),
+                  image: AssetImage('assets/images/hwt_filli.png'),
                 ),
               ),
               Column(

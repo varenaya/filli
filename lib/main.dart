@@ -1,5 +1,7 @@
 import 'package:filli/Auth/SignupPage.dart';
 import 'package:filli/auth/loginPage.dart';
+import 'package:filli/pages/DrawerScreen.dart';
+import 'package:filli/pages/GeneralScreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +38,14 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) => SignupPage()
       },
-      home: LoginPage(),
+      home: Scaffold(
+        body: Stack(
+          children: [
+            DrawerScreen(),
+            GeneralScreen(),
+          ],
+        ),
+      ),
     );
   }
 }
