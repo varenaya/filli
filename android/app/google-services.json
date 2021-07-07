@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "758381792035",
+    "project_id": "filli-1fde7",
+    "storage_bucket": "filli-1fde7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758381792035:android:4c57cd8d541cfd50d19a96",
+        "android_client_info": {
+          "package_name": "com.example.filli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758381792035-43cm48to4m530mpn35f52lndmh3l2rok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWccrh7Q6InaIs-M6d7M1-iJf_GA-8HSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758381792035-43cm48to4m530mpn35f52lndmh3l2rok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

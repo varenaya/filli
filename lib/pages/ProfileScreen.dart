@@ -1,6 +1,6 @@
 import 'package:filli/pages/DrawerScreen.dart';
+import 'package:filli/services/usermanagement.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   double scaleFactor = 1;
 
   bool isDrawerOpen = false;
-  bool isactive = false;
+  bool isactive = true;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                       ),
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          UserManagement().signOut();
+                                        },
                                         icon: Icon(
                                           Icons.logout,
                                           color: Colors.white,
@@ -123,6 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               height: size.height * 0.22,
                             ),
                             InkWell(
+                              splashColor: Colors.grey.shade200,
                               onTap: () {},
                               child: Container(
                                 decoration: BoxDecoration(
@@ -199,6 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               indent: 5,
                             ),
                             InkWell(
+                              splashColor: Colors.grey.shade200,
                               onTap: () {},
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
@@ -226,10 +230,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
                             InkWell(
+                              splashColor: Colors.grey.shade200,
                               onTap: () {},
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
@@ -270,10 +272,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
                             InkWell(
+                              splashColor: Colors.grey.shade200,
                               onTap: () {},
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
@@ -314,10 +314,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
                             InkWell(
+                              splashColor: Colors.grey.shade200,
                               onTap: () {},
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
@@ -359,7 +357,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: size.height * 0.17,
+                            ),
+                            Text(
+                              'beta v1.0',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
                             ),
                           ],
                         ),

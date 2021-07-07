@@ -1,7 +1,9 @@
 import 'package:filli/Auth/SignupPage.dart';
-import 'package:filli/auth/loginPage.dart';
+import 'package:filli/Auth/loginPage.dart';
 import 'package:filli/pages/GeneralScreen.dart';
 import 'package:filli/pages/ProfileScreen.dart';
+import 'package:filli/services/usermanagement.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +40,14 @@ class MyApp extends StatelessWidget {
         '/signup': (BuildContext context) => SignupPage(),
         '/profile': (BuildContext context) => ProfileScreen(),
       },
-      home: GeneralScreen(),
+      home: FutureBuilder(
+          future: Firebase.initializeApp(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
+            return UserManagement().handleAuth();
+          }),
     );
   }
 }
