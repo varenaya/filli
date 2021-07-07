@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:filli/Auth/SignupPage.dart';
 import 'package:filli/Auth/loginPage.dart';
 import 'package:filli/pages/GeneralScreen.dart';
 import 'package:filli/pages/ProfileScreen.dart';
-import 'package:filli/services/usermanagement.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -40,14 +44,25 @@ class MyApp extends StatelessWidget {
         '/signup': (BuildContext context) => SignupPage(),
         '/profile': (BuildContext context) => ProfileScreen(),
       },
-      home: FutureBuilder(
-          future: Firebase.initializeApp(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            }
-            return UserManagement().handleAuth();
-          }),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.idTokenChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+              ),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.lightBlue.shade100,
+            );
+          }
+          if (snapshot.hasData) {
+            return GeneralScreen();
+          }
+          return LoginPage();
+        },
+      ),
     );
   }
 }

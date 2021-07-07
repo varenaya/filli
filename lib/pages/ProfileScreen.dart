@@ -1,5 +1,7 @@
 import 'package:filli/pages/DrawerScreen.dart';
-import 'package:filli/services/usermanagement.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -108,8 +110,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                       ),
                                       IconButton(
-                                        onPressed: () {
-                                          UserManagement().signOut();
+                                        onPressed: () async {
+                                          await FirebaseAuth.instance
+                                              .signOut()
+                                              .then((value) => Navigator.of(
+                                                      context)
+                                                  .pushNamedAndRemoveUntil(
+                                                      '/',
+                                                      (Route<dynamic> route) =>
+                                                          false));
                                         },
                                         icon: Icon(
                                           Icons.logout,
@@ -384,7 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Varenaya Negi',
+                                'Jemini Tore',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,

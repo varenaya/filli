@@ -47,7 +47,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           InkWell(
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('/profile');
+              Navigator.of(context).pushNamed('/profile');
             },
             child: Row(
               children: [
