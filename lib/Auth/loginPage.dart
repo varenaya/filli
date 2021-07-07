@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.only(
               left: 20,
               right: 20,
-              top: size.height * 0.14,
+              top: size.height * 0.1,
               bottom: size.height * 0.06),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,8 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Email or Phone number"),
+                            border: InputBorder.none, hintText: "Your Email"),
                         onSaved: (newValue) {
                           _userEmail = newValue!;
                         },
@@ -151,28 +150,28 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Column(
                 children: [
-                  ElevatedButton(
-                    onPressed: _trySubmit,
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                      elevation: 0,
-                      padding: EdgeInsets.all(18),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
-                    child: Center(
-                      child: _isLoading
-                          ? CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : Text(
+                  _isLoading
+                      ? CircularProgressIndicator(
+                          color: Colors.black,
+                        )
+                      : ElevatedButton(
+                          onPressed: _trySubmit,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.black,
+                            elevation: 0,
+                            padding: EdgeInsets.all(18),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          child: Center(
+                            child: Text(
                               "Login",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                    ),
-                  ),
+                          ),
+                        ),
                   SizedBox(
                     height: size.height * 0.02,
                   ),

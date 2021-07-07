@@ -47,17 +47,10 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
         stream: FirebaseAuth.instance.idTokenChanges(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              child: CircularProgressIndicator(
-                color: Colors.black,
-              ),
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              color: Colors.lightBlue.shade100,
-            );
-          }
           if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
             return GeneralScreen();
           }
           return LoginPage();
