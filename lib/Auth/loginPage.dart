@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:filli/services/googlesigninprovider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -176,7 +178,12 @@ class _LoginPageState extends State<LoginPage> {
                     height: size.height * 0.02,
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      final authprovider = Provider.of<GoogleSignInProvider>(
+                          context,
+                          listen: false);
+                      authprovider.googlelogin();
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

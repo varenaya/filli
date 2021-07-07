@@ -1,8 +1,10 @@
 import 'package:filli/pages/DrawerScreen.dart';
+import 'package:filli/services/googlesigninprovider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -111,6 +113,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                       IconButton(
                                         onPressed: () async {
+                                          final authprovider =
+                                              Provider.of<GoogleSignInProvider>(
+                                                  context,
+                                                  listen: false);
+                                          authprovider.googlesignin
+                                              .disconnect();
                                           await FirebaseAuth.instance
                                               .signOut()
                                               .then((value) => Navigator.of(
