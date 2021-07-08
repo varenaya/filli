@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:filli/services/currentuser.dart';
 import 'package:filli/services/googlesigninprovider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
               backgroundColor: Theme.of(context).errorColor,
             ),
           );
+
           setState(() {
             _isLoading = false;
           });
@@ -182,7 +185,21 @@ class _LoginPageState extends State<LoginPage> {
                       final authprovider = Provider.of<GoogleSignInProvider>(
                           context,
                           listen: false);
-                      authprovider.googlelogin();
+                      authprovider.googlelogin().then((value) async {
+                        final user = FirebaseAuth.instance.currentUser;
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(user!.uid)
+                            .set({
+                          'username': user.displayName,
+                          'email': user.email,
+                          'image_url': user.photoURL,
+                          'userId': user.uid,
+                          'Companies': [],
+                          'status': '',
+                          'online': true,
+                        });
+                      });
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

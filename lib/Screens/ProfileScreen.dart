@@ -1,4 +1,5 @@
-import 'package:filli/pages/DrawerScreen.dart';
+import 'package:filli/Screens/DrawerScreen.dart';
+import 'package:filli/services/currentuser.dart';
 import 'package:filli/services/googlesigninprovider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final userData = Provider.of<Currentuser>(context).userData;
     return Scaffold(
       body: Stack(
         children: [
@@ -391,44 +393,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Container(
                             height: 100,
                             width: 100,
-                            color: Colors.blue,
+                            // decoration: BoxDecoration(
+                            //     image: DecorationImage(
+                            //         image: NetworkImage(
+                            //             userData!.photoURL.toString()))),
                           ),
                         ),
                         Positioned(
                           left: size.width * 0.38,
                           top: size.height * 0.21,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Jemini Tore',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  userData['username'],
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    isactive ? 'Online' : 'Away',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300,
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      isactive ? 'Online' : 'Away',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Icon(
-                                    Icons.online_prediction_sharp,
-                                    color: isactive ? Colors.green : Colors.red,
-                                  )
-                                ],
-                              ),
-                            ],
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Icon(
+                                      Icons.online_prediction_sharp,
+                                      color:
+                                          isactive ? Colors.green : Colors.red,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

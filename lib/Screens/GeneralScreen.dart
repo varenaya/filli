@@ -1,5 +1,7 @@
-import 'package:filli/pages/DrawerScreen.dart';
+import 'package:filli/Screens/DrawerScreen.dart';
+import 'package:filli/services/currentuser.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GeneralScreen extends StatefulWidget {
   const GeneralScreen({Key? key}) : super(key: key);
@@ -14,6 +16,12 @@ class _GeneralScreenState extends State<GeneralScreen> {
   double scaleFactor = 1;
 
   bool isDrawerOpen = false;
+
+  @override
+  void didChangeDependencies() {
+    Provider.of<Currentuser>(context, listen: false).userdata();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

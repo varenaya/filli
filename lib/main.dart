@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:filli/Auth/SignupPage.dart';
 import 'package:filli/Auth/loginPage.dart';
-import 'package:filli/pages/GeneralScreen.dart';
-import 'package:filli/pages/ProfileScreen.dart';
+import 'package:filli/Screens/WelcomeScreen.dart';
+import 'package:filli/Screens/GeneralScreen.dart';
+import 'package:filli/Screens/ProfileScreen.dart';
+import 'package:filli/services/currentuser.dart';
 import 'package:filli/services/googlesigninprovider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +14,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import 'Screens/GeneralScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,8 +30,15 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<GoogleSignInProvider>(
-      create: (context) => GoogleSignInProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<GoogleSignInProvider>(
+          create: (context) => GoogleSignInProvider(),
+        ),
+        ChangeNotifierProvider<Currentuser>(
+          create: (context) => Currentuser(),
+        ),
+      ],
       child: MaterialApp(
         title: 'filli',
         theme: ThemeData(

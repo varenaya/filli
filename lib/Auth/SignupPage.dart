@@ -43,6 +43,8 @@ class _SignupPageState extends State<SignupPage> {
             'image_url': '',
             'userId': authresult.user!.uid,
             'Companies': [],
+            'status': '',
+            'online': true,
           });
         } on FirebaseAuthException catch (err) {
           var message = 'An error occured, please check your credentials!';
