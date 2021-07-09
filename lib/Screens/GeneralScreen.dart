@@ -27,6 +27,14 @@ class _GeneralScreenState extends State<GeneralScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icon(
+                            Icons.close_rounded,
+                            size: 30,
+                          )),
                       Text(
                         '#general',
                         style: TextStyle(

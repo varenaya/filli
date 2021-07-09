@@ -101,7 +101,7 @@ class _SideBarState extends State<SideBar>
                         indent: 32,
                         endIndent: 32,
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context)
@@ -112,7 +112,7 @@ class _SideBarState extends State<SideBar>
                           title: "Home",
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context)
@@ -123,7 +123,7 @@ class _SideBarState extends State<SideBar>
                           title: "You",
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context)
@@ -134,7 +134,7 @@ class _SideBarState extends State<SideBar>
                           title: "Dms",
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context)

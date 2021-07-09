@@ -15,8 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'Screens/GeneralScreen.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -58,6 +56,7 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           '/signup': (BuildContext context) => SignupPage(),
           '/profile': (BuildContext context) => ProfileScreen(),
+          '/general': (BuildContext context) => GeneralScreen(),
         },
         home: StreamBuilder(
           stream: FirebaseAuth.instance.idTokenChanges(),

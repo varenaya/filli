@@ -7,16 +7,15 @@ class Currentuser extends ChangeNotifier {
   bool incompany = true;
   late Map<String, dynamic> _userData;
 
-  User? get user => _user;
   Map<String, dynamic> get userData {
     return {..._userData};
   }
 
-  Future userdata() async {
+  Future userdata(User? user) async {
     try {
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(_user!.uid)
+          .doc(user!.uid)
           .get()
           .then((value) {
         _userData = value.data()!;
