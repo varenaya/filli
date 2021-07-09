@@ -13,13 +13,17 @@ class Currentuser extends ChangeNotifier {
   }
 
   Future userdata() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(_user!.uid)
-        .get()
-        .then((value) {
-      _userData = value.data()!;
-    });
-    notifyListeners();
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_user!.uid)
+          .get()
+          .then((value) {
+        _userData = value.data()!;
+      });
+      notifyListeners();
+    } catch (e) {
+      throw e.toString();
+    }
   }
 }

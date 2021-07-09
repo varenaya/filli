@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:filli/Auth/SignupPage.dart';
 import 'package:filli/Auth/loginPage.dart';
-import 'package:filli/Screens/WelcomeScreen.dart';
 import 'package:filli/Screens/GeneralScreen.dart';
 import 'package:filli/Screens/ProfileScreen.dart';
 import 'package:filli/services/currentuser.dart';
 import 'package:filli/services/googlesigninprovider.dart';
+import 'package:filli/sidebar/sidebar_layout.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
               }
-              return GeneralScreen();
+              return SideBarLayout();
             }
             return LoginPage();
           },

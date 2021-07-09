@@ -59,11 +59,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 SizedBox(
                   width: 10,
                 ),
-                Text('You',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16))
+                Text(
+                  'You',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
+                ),
               ],
             ),
           ),
