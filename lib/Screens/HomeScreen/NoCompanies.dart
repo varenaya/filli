@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NoCompanies extends StatefulWidget {
   final size;
-  final Map userdata;
+  final Map? userdata;
   const NoCompanies({Key? key, this.size, required this.userdata})
       : super(key: key);
 
@@ -47,7 +47,7 @@ class _NoCompaniesState extends State<NoCompanies> {
             ),
             children: [
               TextSpan(
-                  text: ' ${widget.userdata['email']}.',
+                  text: ' ${widget.userdata!['email']}.',
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
@@ -91,7 +91,7 @@ class _NoCompaniesState extends State<NoCompanies> {
           thickness: 1,
           height: 40,
         ),
-        widget.userdata['invitation'].isEmpty
+        widget.userdata!['invitation'].isEmpty
             ? Column(
                 children: [
                   Text(
