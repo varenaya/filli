@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:filli/Screens/DmScreen.dart';
-import 'package:filli/Screens/HomeScreen.dart';
+import 'package:filli/Screens/HomeScreen/HomeScreen.dart';
 import 'package:filli/Screens/ProfileScreen.dart';
 
 enum NavigationEvents {

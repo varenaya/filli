@@ -1,10 +1,9 @@
-import 'package:filli/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:filli/services/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:filli/services/currentuser.dart';
 
 import 'package:filli/services/googlesigninprovider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Stack(
               children: [
                 Container(
-                  color: Colors.red,
+                  color: Colors.redAccent.shade100,
                   height: size.height * 0.2,
                 ),
                 Column(

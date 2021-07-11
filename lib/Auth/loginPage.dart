@@ -194,8 +194,10 @@ class _LoginPageState extends State<LoginPage> {
                           'username': user.displayName,
                           'email': user.email,
                           'image_url': user.photoURL,
+                          'cover_url': '',
                           'userId': user.uid,
-                          'Companies': [],
+                          'companies': [],
+                          'invitation': [],
                           'status': '',
                           'online': true,
                         });

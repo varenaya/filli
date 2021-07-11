@@ -1,4 +1,4 @@
-import 'package:filli/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:filli/services/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:flutter/material.dart';
 
 class DmScreen extends StatefulWidget with NavigationStates {

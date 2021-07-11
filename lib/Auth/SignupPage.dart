@@ -41,8 +41,10 @@ class _SignupPageState extends State<SignupPage> {
             'username': _userName,
             'email': _userEmail,
             'image_url': '',
+            'cover_url': '',
             'userId': authresult.user!.uid,
-            'Companies': [],
+            'companies': [],
+            'invitation': [],
             'status': '',
             'online': true,
           });

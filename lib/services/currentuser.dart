@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Currentuser extends ChangeNotifier {
-  final _user = FirebaseAuth.instance.currentUser;
-  bool incompany = true;
   late Map<String, dynamic> _userData;
 
   Map<String, dynamic> get userData {
