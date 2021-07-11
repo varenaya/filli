@@ -84,16 +84,21 @@ class _NoCompaniesState extends State<NoCompanies> {
             ),
           ),
         ),
+        SizedBox(
+          height: 20,
+        ),
         Divider(
           endIndent: 20,
           indent: 20,
           color: Colors.black,
           thickness: 1,
-          height: 40,
         ),
         widget.userdata!['invitation'].isEmpty
             ? Column(
                 children: [
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
                     'Couldn\'t find any lobby?',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
@@ -101,7 +106,7 @@ class _NoCompaniesState extends State<NoCompanies> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      'Well, we couldn\'t find any invitation, ask a admin to send one, Or try signing with another account.',
+                      'Well, we couldn\'t find any invitation, ask a admin to send one, or try signing with another account.',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -111,8 +116,74 @@ class _NoCompaniesState extends State<NoCompanies> {
                   ),
                 ],
               )
-            : Card(
-                child: Text('ghg'),
+            : Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20, bottom: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.black45,
+                        ),
+                      ),
+                      padding: EdgeInsets.only(left: 18, bottom: 10, top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${widget.userdata!['invitation'][index]['company']}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                      '${widget.userdata!['invitation'][index]['invitedby']} invited you')
+                                ],
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 15.0),
+                            child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.green,
+                                  elevation: 0,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 22,
+                                    vertical: 10,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Join',
+                                  style: TextStyle(fontSize: 16),
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  itemCount: widget.userdata!['invitation'].length,
+                ),
               ),
       ],
     );
