@@ -40,13 +40,16 @@ class _HomeScreenState extends State<HomeScreen> {
             .doc(user!.uid)
             .snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+          if (!snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
           }
+
           final userdata = snapshot.data;
           return Scaffold(
             body: userdata!.data()!['companies'].isEmpty
