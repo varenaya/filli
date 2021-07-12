@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DefaultHome extends StatefulWidget {
   final size;
-  const DefaultHome({Key? key, this.size}) : super(key: key);
+  final Map? userdata;
+  const DefaultHome({Key? key, this.size, required this.userdata})
+      : super(key: key);
 
   @override
   _DefaultHomeState createState() => _DefaultHomeState();
@@ -23,8 +25,19 @@ class _DefaultHomeState extends State<DefaultHome> {
                 height: 60,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 100.0),
+                    child: Text(
+                      '${widget.userdata!['companies'].firstWhere((element) => element['selected'] == true, orElse: () => null)['name']}',
+                      style: TextStyle(
+                        fontFamily: 'Anteb',
+                        fontSize: 28,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                   IconButton(
                     onPressed: () {},
                     icon: Icon(

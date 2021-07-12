@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:filli/Auth/SignupPage.dart';
 import 'package:filli/Auth/loginPage.dart';
+import 'package:filli/Screens/AddLobbyScreen.dart';
 import 'package:filli/Screens/GeneralScreen.dart';
 import 'package:filli/Screens/ProfileScreen.dart';
 import 'package:filli/services/currentuser.dart';
@@ -44,10 +45,12 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color(0xffffffff),
           hintColor: const Color(0xff9C9C9D),
           primaryColorLight: const Color(0xffF7F7F7),
+          fontFamily: 'Kollektif',
           textTheme: TextTheme(
             headline1: TextStyle(
               color: Colors.black,
               fontSize: 40,
+              fontFamily: 'Anteb',
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
           '/signup': (BuildContext context) => SignupPage(),
           '/profile': (BuildContext context) => ProfileScreen(),
           '/general': (BuildContext context) => GeneralScreen(),
+          '/addlobby': (BuildContext context) => AddLobbyScreen(),
         },
         home: StreamBuilder(
           stream: FirebaseAuth.instance.idTokenChanges(),

@@ -17,23 +17,22 @@ class HomeScreen extends StatefulWidget with NavigationStates {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser;
-  var _isInit = true;
-  @override
-  void didChangeDependencies() {
-    if (_isInit == true) {
-      Provider.of<Currentuser>(context).userdata(user);
-    }
-    setState(() {
-      _isInit = false;
-    });
+  // var _isInit = true;
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit == true) {
+  //     Provider.of<Currentuser>(context).userdata(user);
+  //   }
+  //   setState(() {
+  //     _isInit = false;
+  //   });
 
-    super.didChangeDependencies();
-  }
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
     return StreamBuilder<DocumentSnapshot<Map<dynamic, dynamic>>>(
         stream: FirebaseFirestore.instance
             .collection('users')
@@ -51,13 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           final userdata = snapshot.data;
+          Provider.of<Currentuser>(context).userdata(userdata!.data());
           return Scaffold(
-            body: userdata!.data()!['companies'].isEmpty
+            body: userdata.data()!['companies'].isEmpty
                 ? NoCompanies(
                     size: size,
                     userdata: userdata.data(),
                   )
                 : DefaultHome(
+                    userdata: userdata.data(),
                     size: size,
                   ),
           );

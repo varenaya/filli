@@ -126,12 +126,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(
                               width: 20,
                             ),
-                            Text(
-                              isactive ? 'Set as Away' : 'Set as Online',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                              ),
+                            RichText(
+                              text: TextSpan(
+                                  text: 'Set as ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: isactive ? 'Away' : 'Online',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ]),
                             )
                           ],
                         ),
@@ -168,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Text(
                               'Notifications',
                               style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                                 fontSize: 16,
                               ),
                             )
@@ -200,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Text(
                                   'ToDo',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -241,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Text(
                                   'Notes',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -282,7 +294,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Text(
                                   'Links',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 16,
                                   ),
                                 ),

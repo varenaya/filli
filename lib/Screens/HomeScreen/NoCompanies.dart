@@ -24,8 +24,9 @@ class _NoCompaniesState extends State<NoCompanies> {
             Text(
               'Let\'s get Started !',
               style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w900,
+                fontFamily: 'Anteb',
+                fontSize: 25,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
@@ -47,18 +48,23 @@ class _NoCompaniesState extends State<NoCompanies> {
             ),
             children: [
               TextSpan(
-                  text: ' ${widget.userdata!['email']}.',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ))
+                text: ' ${widget.userdata!['email']}.',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
         ),
         Text(
-          'You\'re all set to start a new Fiili lobby for your organisation',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+          'You\'re all set to start a new Fiili lobby for your organisation.',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
+          ),
           textAlign: TextAlign.center,
         ),
         SizedBox(
@@ -80,7 +86,8 @@ class _NoCompaniesState extends State<NoCompanies> {
           child: Text(
             'Create a new Lobby',
             style: TextStyle(
-              fontSize: 18,
+              fontFamily: 'Anteb',
+              fontSize: 20,
             ),
           ),
         ),
@@ -104,9 +111,9 @@ class _NoCompaniesState extends State<NoCompanies> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Text(
-                      'Well, we couldn\'t find any invitation, ask a admin to send one, or try signing with another account.',
+                      'Well, we couldn\'t find any invitation either, ask a admin to send one, or try signing in with another account.',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -148,9 +155,12 @@ class _NoCompaniesState extends State<NoCompanies> {
                                   Text(
                                     '${widget.userdata!['invitation'][index]['company']}',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
                                   ),
                                   Text(
                                       '${widget.userdata!['invitation'][index]['invitedby']} invited you')
@@ -163,7 +173,7 @@ class _NoCompaniesState extends State<NoCompanies> {
                             child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.green,
+                                  primary: Colors.green.shade900,
                                   elevation: 0,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 22,

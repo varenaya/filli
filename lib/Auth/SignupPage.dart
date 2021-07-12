@@ -79,7 +79,7 @@ class _SignupPageState extends State<SignupPage> {
           padding: EdgeInsets.only(
               left: 20,
               right: 20,
-              top: size.height * 0.07,
+              top: size.height * 0.01,
               bottom: size.height * 0.06),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

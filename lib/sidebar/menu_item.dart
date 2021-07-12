@@ -18,7 +18,7 @@ class MenuItem extends StatelessWidget {
         children: <Widget>[
           Icon(
             icon,
-            color: Colors.white,
+            color: Colors.blue.shade100,
             size: 30,
           ),
           SizedBox(
@@ -27,7 +27,10 @@ class MenuItem extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+            ),
           )
         ],
       ),

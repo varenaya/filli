@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.only(
               left: 20,
               right: 20,
-              top: size.height * 0.1,
+              top: size.height * 0.05,
               bottom: size.height * 0.06),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,9 +84,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
                     Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -178,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                   SizedBox(
-                    height: size.height * 0.02,
+                    height: size.height * 0.04,
                   ),
                   InkWell(
                     onTap: () {
@@ -222,7 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.025,
+                    height: size.height * 0.04,
                   ),
                   InkWell(
                     onTap: () {
