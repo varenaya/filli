@@ -42,7 +42,7 @@ class _NoCompaniesState extends State<NoCompanies> {
           text: TextSpan(
             text: 'You\'ve logged in as',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 15,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
@@ -50,7 +50,7 @@ class _NoCompaniesState extends State<NoCompanies> {
               TextSpan(
                 text: ' ${widget.userdata!['email']}.',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
@@ -132,63 +132,60 @@ class _NoCompaniesState extends State<NoCompanies> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Colors.black45,
+                          color: Colors.lightBlue.shade100,
                         ),
                       ),
-                      padding: EdgeInsets.only(left: 18, bottom: 10, top: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.red,
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${widget.userdata!['invitation'][index]['company']}',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                      padding: EdgeInsets.only(bottom: 5, top: 5),
+                      child: ListTile(
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: widget.userdata!['invitation'][index]
+                                          ['img_url'] ==
+                                      ""
+                                  ? AssetImage(
+                                          'assets/images/Company_defimg.png')
+                                      as ImageProvider
+                                  : NetworkImage(
+                                      widget.userdata!['invitation'][index]
+                                          ['img_url'],
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                      '${widget.userdata!['invitation'][index]['invitedby']} invited you')
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 15.0),
-                            child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.green.shade900,
-                                  elevation: 0,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 22,
-                                    vertical: 10,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                child: Text(
-                                  'Join',
-                                  style: TextStyle(fontSize: 16),
-                                )),
-                          )
-                        ],
+                        ),
+                        title: Text(
+                          '${widget.userdata!['invitation'][index]['company']}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        subtitle: Text(
+                          '${widget.userdata!['invitation'][index]['invitedby']} invited you',
+                        ),
+                        trailing: Padding(
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.green.shade900,
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 22,
+                                vertical: 10,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: Text(
+                              'Join',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),

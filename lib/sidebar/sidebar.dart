@@ -106,7 +106,7 @@ class _SideBarState extends State<SideBar>
                                       ? CircleAvatar(
                                           foregroundImage: AssetImage(
                                               'assets/images/Astronaut.png'),
-                                          radius: 48,
+                                          radius: 45,
                                           backgroundColor: Colors.black54,
                                         )
                                       : (companies.firstWhere(
@@ -138,7 +138,7 @@ class _SideBarState extends State<SideBar>
                                             Text(
                                               'Hey,',
                                               style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 17,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -148,7 +148,7 @@ class _SideBarState extends State<SideBar>
                                             Text(
                                               'You have\'nt joined a Lobby yet!',
                                               style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: 15,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -236,103 +236,14 @@ class _SideBarState extends State<SideBar>
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/addlobby');
+                              Navigator.of(context).pushNamed('/addlobby',
+                                  arguments: userdata.data());
                             },
                             child: MenuItem(
                               icon: Icons.add_circle_outline_sharp,
                               title: "Add a Filli lobby",
                             ),
                           ),
-                          // companies.isEmpty
-                          //     ? SizedBox()
-                          //     : Expanded(
-                          //         child: ListView.builder(
-                          //             itemBuilder: (context, index) {
-                          //               // companies.removeAt(companies.indexWhere((element) => element['selected']==true));
-                          //               return InkWell(
-                          //                 onTap: () async {
-                          //                   // await FirebaseFirestore.instance
-                          //                   //     .collection('users')
-                          //                   //     .doc(user!.uid)
-                          //                   //     .update({
-                          //                   //   'companies': FieldValue.delete(),
-                          //                   // }).then((value) async {
-                          //                   //   await FirebaseFirestore.instance
-                          //                   //       .collection('users')
-                          //                   //       .doc(user!.uid)
-                          //                   //       .update({
-                          //                   //         'companies': FieldValue.arrayUnion([userdata.data()!['companies'][index+1],])
-                          //                   //       });
-                          //                   // });
-                          //                 },
-                          //                 child: Padding(
-                          //                   padding: const EdgeInsets.only(
-                          //                       bottom: 10.0),
-                          //                   child: Container(
-                          //                     decoration: BoxDecoration(
-                          //                       borderRadius:
-                          //                           BorderRadius.circular(12),
-                          //                       border: Border.all(
-                          //                         color:
-                          //                             Colors.lightBlue.shade100,
-                          //                       ),
-                          //                     ),
-                          //                     padding: EdgeInsets.only(
-                          //                         left: 18,
-                          //                         bottom: 10,
-                          //                         top: 10),
-                          //                     child: Row(
-                          //                       mainAxisAlignment:
-                          //                           MainAxisAlignment
-                          //                               .spaceBetween,
-                          //                       children: [
-                          //                         Row(
-                          //                           children: [
-                          //                             companies[index]
-                          //                                         ['i_url'] ==
-                          //                                     ''
-                          //                                 ? Container(
-                          //                                     width: 50,
-                          //                                     height: 50,
-                          //                                     color:
-                          //                                         Colors.pink,
-                          //                                   )
-                          //                                 : Container(
-                          //                                     width: 50,
-                          //                                     height: 50,
-                          //                                     color:
-                          //                                         Colors.amber,
-                          //                                   ),
-                          //                             SizedBox(
-                          //                               width: 20,
-                          //                             ),
-                          //                             Column(
-                          //                               crossAxisAlignment:
-                          //                                   CrossAxisAlignment
-                          //                                       .start,
-                          //                               children: [
-                          //                                 Text(
-                          //                                   '${companies[index]['name']}',
-                          //                                   style: TextStyle(
-                          //                                       fontSize: 18,
-                          //                                       fontWeight:
-                          //                                           FontWeight
-                          //                                               .w500,
-                          //                                       color: Colors
-                          //                                           .white),
-                          //                                 ),
-                          //                               ],
-                          //                             ),
-                          //                           ],
-                          //                         ),
-                          //                       ],
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               );
-                          //             },
-                          //             itemCount: companies.length - 1),
-                          //       ),
                         ],
                       ),
                     ),
