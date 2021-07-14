@@ -280,7 +280,9 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/createlobby');
+                      },
                       child: Row(
                         children: [
                           Icon(
