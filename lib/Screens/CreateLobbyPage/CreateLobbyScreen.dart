@@ -278,7 +278,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                               )),
                             ),
                             Text(
-                              'Skadoosh, Now you can easily connect with your team and get your project done in a faster and statictical way...',
+                              'Skadoosh, Now you can easily connect with your team and get your project done in no time...',
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 15),
                             )
