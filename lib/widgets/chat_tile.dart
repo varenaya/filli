@@ -23,9 +23,7 @@ class ChatTile extends StatelessWidget {
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 0,
                 ),
-                leading: CircleAvatar(
-                  radius: 25,
-                ),
+                leading: CircleAvatar(),
                 title: Text(
                   'Jemini Tore',
                   style: TextStyle(
@@ -75,7 +73,7 @@ class ChatTile extends StatelessWidget {
                                   text:
                                       'In general, we can make random colors ourselves with only a few lines of code so there’s no need to using a third-party plugin. However, using plugins also has a few advantages. For example, a package name random_color generates random colors that are visually pleasing and',
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 16,
                                     color: Colors.black87,
                                     fontFamily: 'Kollektif',
                                   ),

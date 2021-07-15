@@ -184,20 +184,22 @@ class _LoginPageState extends State<LoginPage> {
                           listen: false);
                       authprovider.googlelogin().then((value) async {
                         final user = FirebaseAuth.instance.currentUser;
-                        await FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user!.uid)
-                            .set({
-                          'username': user.displayName,
-                          'email': user.email,
-                          'image_url': user.photoURL,
-                          'cover_url': '',
-                          'userId': user.uid,
-                          'companies': [],
-                          'invitation': [],
-                          'status': '',
-                          'online': true,
-                        });
+                        final usertime = user!.metadata.creationTime;
+                        if (DateTime.now().difference(usertime!).inSeconds < 10)
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user.uid)
+                              .set({
+                            'username': user.displayName,
+                            'email': user.email,
+                            'image_url': user.photoURL,
+                            'cover_url': '',
+                            'userId': user.uid,
+                            'companies': [],
+                            'invitation': [],
+                            'status': '',
+                            'online': true,
+                          });
                       });
                     },
                     child: Row(
