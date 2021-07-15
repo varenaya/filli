@@ -133,7 +133,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                           Text(
                             'general',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 17,
                               color: Colors.black,
                             ),
                           ),
@@ -217,7 +217,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                           Text(
                             'Test',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 17,
                               color: Colors.black,
                             ),
                           ),

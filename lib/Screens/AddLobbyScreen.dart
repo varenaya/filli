@@ -137,17 +137,21 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                                   ),
                                   padding: EdgeInsets.only(bottom: 5, top: 5),
                                   child: ListTile(
-                                    leading: companies[index]['i_url'] == ''
-                                        ? Container(
-                                            width: 50,
-                                            height: 50,
-                                            color: Colors.pink,
-                                          )
-                                        : Container(
-                                            width: 50,
-                                            height: 50,
-                                            color: Colors.amber,
-                                          ),
+                                    leading: Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: companies[index]['i_url'] == ''
+                                              ? AssetImage(
+                                                      'assets/images/Company_defimg.png')
+                                                  as ImageProvider
+                                              : NetworkImage(
+                                                  companies[index]['i_url'],
+                                                ),
+                                        ),
+                                      ),
+                                    ),
                                     title: Text(
                                       '${companies[index]['name']}',
                                       style: TextStyle(

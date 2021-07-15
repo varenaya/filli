@@ -298,13 +298,13 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                                     SizedBox(
                                       height: 15,
                                     ),
-                                    Row(
-                                      children: [
-                                        _isLoading
-                                            ? CircularProgressIndicator(
-                                                color: Colors.lightBlue,
-                                              )
-                                            : ElevatedButton(
+                                    _isLoading
+                                        ? CircularProgressIndicator(
+                                            color: Colors.lightBlue,
+                                          )
+                                        : Row(
+                                            children: [
+                                              ElevatedButton(
                                                 onPressed: onStepContinue,
                                                 style: ElevatedButton.styleFrom(
                                                   primary:
@@ -329,20 +329,20 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                                                   ),
                                                 ),
                                               ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        TextButton(
-                                          onPressed: onStepCancel,
-                                          child: Text(
-                                            'CANCEL',
-                                            style: TextStyle(
-                                              color: Colors.red,
-                                            ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              TextButton(
+                                                onPressed: onStepCancel,
+                                                child: Text(
+                                                  'CANCEL',
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
                                   ],
                                 );
                               },
