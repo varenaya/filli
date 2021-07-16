@@ -9,6 +9,101 @@ class GeneralScreen extends StatefulWidget {
 }
 
 class _GeneralScreenState extends State<GeneralScreen> {
+  GlobalKey _key = LabeledGlobalKey("button_icon");
+  late OverlayEntry _overlayEntry;
+  late Size buttonSize;
+  late Offset buttonPosition;
+  bool isMenuOpen = false;
+
+  findButton() {
+    RenderBox? renderBox =
+        _key.currentContext!.findRenderObject() as RenderBox?;
+    buttonSize = renderBox!.size;
+    buttonPosition = renderBox.localToGlobal(Offset.zero);
+  }
+
+  OverlayEntry _overlayEntryBuilder() {
+    return OverlayEntry(
+      builder: (context) {
+        return Positioned(
+          top: buttonPosition.dy + buttonSize.height + 5,
+          left: buttonPosition.dx - buttonSize.width * 8,
+          width: buttonSize.width * 15,
+          child: Material(
+            color: Colors.indigo.shade300,
+            child: Container(
+              decoration: BoxDecoration(
+                // border: Border.all(width: 5, color: Colors.white),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    8,
+                  ),
+                ),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Description',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.edit,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'Lorem IPsum Random description text of nothing just normal anything and random stuff going on with all the operations going Icons are identified by their name as listed below.',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void openMenu() {
+    findButton();
+    _overlayEntry = _overlayEntryBuilder();
+    Overlay.of(context)!.insert(_overlayEntry);
+    isMenuOpen = !isMenuOpen;
+  }
+
+  void closeMenu() {
+    _overlayEntry.remove();
+    isMenuOpen = !isMenuOpen;
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -36,12 +131,31 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           icon: Icon(
                             Icons.close_rounded,
                           )),
-                      Text(
-                        '# general',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            '# general',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          InkWell(
+                            key: _key,
+                            onTap: () {
+                              setState(() {
+                                if (isMenuOpen) {
+                                  closeMenu();
+                                } else {
+                                  openMenu();
+                                }
+                              });
+                            },
+                            child: Icon(
+                              Icons.arrow_drop_down,
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
