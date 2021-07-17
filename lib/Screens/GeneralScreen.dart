@@ -30,15 +30,19 @@ class _GeneralScreenState extends State<GeneralScreen> {
           left: buttonPosition.dx - buttonSize.width * 8,
           width: buttonSize.width * 15,
           child: Material(
-            color: Colors.indigo.shade300,
+            elevation: 5,
+            color: Color.fromRGBO(230, 230, 255, 1.0),
             child: Container(
               decoration: BoxDecoration(
                 // border: Border.all(width: 5, color: Colors.white),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    8,
-                  ),
-                ),
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.white,
+                //     offset: Offset(0.0, 1.0), //(x,y)
+                //     blurRadius: 6.0,
+                //   ),
+                // ],
+                borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
                 children: [
@@ -55,7 +59,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                         InkWell(
@@ -63,7 +67,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           child: Icon(
                             Icons.edit,
                             size: 20,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -78,7 +82,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                       'Lorem IPsum Random description text of nothing just normal anything and random stuff going on with all the operations going Icons are identified by their name as listed below.',
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.w300,
                       ),
                     ),
@@ -113,10 +117,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: 50,
+              height: size.height * 0.06,
             ),
             Container(
-              height: size.height * 0.92,
+              height: size.height * 0.94,
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,8 +140,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           Text(
                             '# general',
                             style: TextStyle(
+                              fontFamily: 'Anteb',
                               fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           InkWell(

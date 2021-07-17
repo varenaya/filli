@@ -211,10 +211,10 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: 50,
+              height: size.height * 0.06,
             ),
             Container(
-              height: size.height * 0.7,
+              height: size.height * 0.94,
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

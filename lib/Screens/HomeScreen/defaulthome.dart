@@ -205,17 +205,19 @@ class _DefaultHomeState extends State<DefaultHome> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (ctx, i) => InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/project-overview');
+                    },
                     child: Padding(
                       padding:
                           const EdgeInsets.only(top: 8, left: 50, bottom: 8),
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 30,
+                            width: 5,
                           ),
                           Text(
-                            'Test',
+                            'Website Developement',
                             style: TextStyle(
                               fontSize: 17,
                               color: Colors.black,
