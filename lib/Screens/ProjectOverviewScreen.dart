@@ -113,11 +113,9 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                         ),
                       ),
                     ),
-                    Row(
-                      children: [Text('Started on: 15 July 2021, 5:20 PM')],
-                    ),
                     SizedBox(
-                      height: 100,
+                      height: 120,
+                      width: double.infinity,
                     )
                   ],
                 ),
@@ -126,141 +124,117 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                 height: size.height * 0.02,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
-                    onTap: () {},
-                    child: Card(
-                      elevation: 10,
-                      color: Colors.blue,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.rate_review_outlined,
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/todo');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Image(
+                            image: AssetImage('assets/icons/todo_logo.png'),
+                            height: 60,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'ToDo',
+                            style: TextStyle(
                               color: Colors.grey.shade700,
-                              size: 30,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'ToDo',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 20,
                   ),
                   InkWell(
-                    onTap: () {},
-                    child: Card(
-                      elevation: 10,
-                      color: Colors.blue,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.notes_outlined,
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/notes');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Image(
+                            image: AssetImage('assets/icons/notes_logo.png'),
+                            height: 60,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Notes',
+                            style: TextStyle(
                               color: Colors.grey.shade700,
-                              size: 30,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Notes',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 20,
                   ),
                   InkWell(
-                    onTap: () {},
-                    child: Card(
-                      elevation: 10,
-                      color: Colors.blue,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.link,
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/links');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Image(
+                            image: AssetImage('assets/icons/links_logo.png'),
+                            height: 60,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Links',
+                            style: TextStyle(
                               color: Colors.grey.shade700,
-                              size: 30,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Links',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 20,
                   ),
                   InkWell(
-                    onTap: () {},
-                    child: Card(
-                      elevation: 10,
-                      color: Colors.blue,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.file_copy,
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/files');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Image(
+                            image: AssetImage('assets/icons/files_logo.png'),
+                            height: 60,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Files',
+                            style: TextStyle(
                               color: Colors.grey.shade700,
-                              size: 30,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Files',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 20,
                   ),
                 ],
-              ),
-              Divider(
-                height: 10,
-                thickness: 1,
-                color: Colors.blueGrey,
               ),
               SizedBox(
                 height: size.height * 0.02,
@@ -341,7 +315,7 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                       ),
                     ),
                   ),
-                  itemCount: 20,
+                  itemCount: 4,
                 ),
               ),
             ],

@@ -190,7 +190,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     InkWell(
                       splashColor: Colors.grey.shade200,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/todo');
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(
@@ -231,7 +233,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     InkWell(
                       splashColor: Colors.grey.shade200,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/notes');
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(
@@ -272,7 +276,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     InkWell(
                       splashColor: Colors.grey.shade200,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/links');
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(

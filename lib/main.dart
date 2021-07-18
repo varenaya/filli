@@ -4,9 +4,13 @@ import 'package:filli/Auth/SignupPage.dart';
 import 'package:filli/Auth/loginPage.dart';
 import 'package:filli/Screens/AddLobbyScreen.dart';
 import 'package:filli/Screens/CreateLobbyScreen.dart';
+import 'package:filli/Screens/FilesScreen.dart';
 import 'package:filli/Screens/GeneralScreen.dart';
+import 'package:filli/Screens/LinksScreen.dart';
+import 'package:filli/Screens/NotesScreen.dart';
 import 'package:filli/Screens/ProfileScreen.dart';
 import 'package:filli/Screens/ProjectOverviewScreen.dart';
+import 'package:filli/Screens/TodScreen.dart';
 import 'package:filli/services/currentuser.dart';
 import 'package:filli/services/googlesigninprovider.dart';
 import 'package:filli/sidebar/sidebar_layout.dart';
@@ -66,6 +70,10 @@ class MyApp extends StatelessWidget {
           '/createlobby': (BuildContext context) => CreateLobbyScreen(),
           '/project-overview': (BuildContext context) =>
               ProjectOverviewScreen(),
+          '/todo': (BuildContext context) => TodoScreen(),
+          '/notes': (BuildContext context) => NotesScreen(),
+          '/links': (BuildContext context) => LinksScreen(),
+          '/files': (BuildContext context) => FilesScreen(),
         },
         home: StreamBuilder(
           stream: FirebaseAuth.instance.idTokenChanges(),

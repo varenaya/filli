@@ -68,6 +68,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                           Text(
                             'Channels',
                             style: TextStyle(
+                              fontFamily: 'Anteb',
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -159,6 +160,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                             'Projects',
                             style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'Anteb',
                               fontWeight: FontWeight.bold,
                             ),
                           ),
