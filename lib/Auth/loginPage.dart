@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:filli/Auth/SignupPage.dart';
+import 'package:filli/services/custom_page_route.dart';
 
 import 'package:filli/services/googlesigninprovider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -225,7 +227,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/signup');
+                      Navigator.of(context).push(
+                        CustomPageRoute(
+                          child: SignupPage(),
+                          direction: AxisDirection.left,
+                        ),
+                      );
                     },
                     child: Text(
                       "Create account",

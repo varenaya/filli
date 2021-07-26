@@ -1,4 +1,7 @@
+import 'package:filli/services/custom_page_route.dart';
 import 'package:flutter/material.dart';
+
+import '../CreateLobbyScreen.dart';
 
 class NoCompanies extends StatefulWidget {
   final size;
@@ -73,7 +76,12 @@ class _NoCompaniesState extends State<NoCompanies> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/createlobby');
+              Navigator.of(context).push(
+                CustomPageRoute(
+                  child: CreateLobbyScreen(),
+                  direction: AxisDirection.left,
+                ),
+              );
             },
             style: ElevatedButton.styleFrom(
               primary: Colors.indigo.shade900,

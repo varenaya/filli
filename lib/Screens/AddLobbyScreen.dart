@@ -1,7 +1,10 @@
+import 'package:filli/Screens/CreateLobbyScreen.dart';
+import 'package:filli/services/custom_page_route.dart';
 import 'package:flutter/material.dart';
 
 class AddLobbyScreen extends StatefulWidget {
-  const AddLobbyScreen({Key? key}) : super(key: key);
+  final userdata;
+  const AddLobbyScreen({Key? key, this.userdata}) : super(key: key);
 
   @override
   _AddLobbyScreenState createState() => _AddLobbyScreenState();
@@ -11,10 +14,9 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final userdata =
-        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
-    List companies = userdata['companies'];
-    List invitations = userdata['invitation'];
+
+    List companies = widget.userdata['companies'];
+    List invitations = widget.userdata['invitation'];
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -276,7 +278,7 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                               ),
                             ),
                           ),
-                          itemCount: userdata['invitation'].length,
+                          itemCount: invitations.length,
                         ),
                   SizedBox(
                     height: size.height * 0.05,
@@ -285,7 +287,12 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                     padding: const EdgeInsets.only(left: 15.0),
                     child: InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed('/createlobby');
+                        Navigator.of(context).push(
+                          CustomPageRoute(
+                            child: CreateLobbyScreen(),
+                            direction: AxisDirection.up,
+                          ),
+                        );
                       },
                       child: Row(
                         children: [

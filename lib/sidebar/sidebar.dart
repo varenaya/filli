@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:filli/Screens/AddLobbyScreen.dart';
+import 'package:filli/services/custom_page_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +25,7 @@ class _SideBarState extends State<SideBar>
   late Stream<bool> isSidebarOpenedStream;
   late StreamSink<bool> isSidebarOpenedSink;
   final user = FirebaseAuth.instance.currentUser;
-  final _animationDuration = const Duration(milliseconds: 300);
+  final _animationDuration = const Duration(milliseconds: 400);
 
   @override
   void initState() {
@@ -236,8 +238,14 @@ class _SideBarState extends State<SideBar>
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/addlobby',
-                                  arguments: userdata.data());
+                              Navigator.of(context).push(
+                                CustomPageRoute(
+                                  child: AddLobbyScreen(
+                                    userdata: userdata.data(),
+                                  ),
+                                  direction: AxisDirection.up,
+                                ),
+                              );
                             },
                             child: MenuItem(
                               icon: Icons.add_circle_outline_sharp,

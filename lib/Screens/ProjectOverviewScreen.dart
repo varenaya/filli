@@ -1,3 +1,9 @@
+import 'package:filli/Screens/FilesScreen.dart';
+import 'package:filli/Screens/GeneralScreen.dart';
+import 'package:filli/Screens/LinksScreen.dart';
+import 'package:filli/Screens/NotesScreen.dart';
+import 'package:filli/Screens/TodScreen.dart';
+import 'package:filli/services/custom_page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -128,7 +134,12 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/todo');
+                      Navigator.of(context).push(
+                        CustomPageRoute(
+                          child: TodoScreen(),
+                          direction: AxisDirection.left,
+                        ),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -155,7 +166,12 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/notes');
+                      Navigator.of(context).push(
+                        CustomPageRoute(
+                          child: NotesScreen(),
+                          direction: AxisDirection.left,
+                        ),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -182,7 +198,12 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/links');
+                      Navigator.of(context).push(
+                        CustomPageRoute(
+                          child: LinksScreen(),
+                          direction: AxisDirection.left,
+                        ),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -209,7 +230,12 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/files');
+                      Navigator.of(context).push(
+                        CustomPageRoute(
+                          child: FilesScreen(),
+                          direction: AxisDirection.left,
+                        ),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -290,7 +316,12 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                 child: ListView.builder(
                   itemBuilder: (context, index) => InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/general');
+                      Navigator.of(context).push(
+                        CustomPageRoute(
+                          child: GeneralScreen(),
+                          direction: AxisDirection.left,
+                        ),
+                      );
                     },
                     child: Padding(
                       padding:

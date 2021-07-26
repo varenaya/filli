@@ -1,5 +1,9 @@
+import 'package:filli/Screens/LinksScreen.dart';
+import 'package:filli/Screens/NotesScreen.dart';
+import 'package:filli/Screens/TodScreen.dart';
 import 'package:filli/services/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:filli/services/currentuser.dart';
+import 'package:filli/services/custom_page_route.dart';
 
 import 'package:filli/services/googlesigninprovider.dart';
 
@@ -191,7 +195,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     InkWell(
                       splashColor: Colors.grey.shade200,
                       onTap: () {
-                        Navigator.of(context).pushNamed('/todo');
+                        Navigator.of(context).push(
+                          CustomPageRoute(
+                            child: TodoScreen(),
+                            direction: AxisDirection.left,
+                          ),
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -234,7 +243,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     InkWell(
                       splashColor: Colors.grey.shade200,
                       onTap: () {
-                        Navigator.of(context).pushNamed('/notes');
+                        Navigator.of(context).push(
+                          CustomPageRoute(
+                            child: NotesScreen(),
+                            direction: AxisDirection.left,
+                          ),
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -277,7 +291,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     InkWell(
                       splashColor: Colors.grey.shade200,
                       onTap: () {
-                        Navigator.of(context).pushNamed('/links');
+                        Navigator.of(context).push(
+                          CustomPageRoute(
+                            child: LinksScreen(),
+                            direction: AxisDirection.left,
+                          ),
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
