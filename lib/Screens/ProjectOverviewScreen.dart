@@ -2,7 +2,7 @@ import 'package:filli/Screens/FilesScreen.dart';
 import 'package:filli/Screens/GeneralScreen.dart';
 import 'package:filli/Screens/LinksScreen.dart';
 import 'package:filli/Screens/NotesScreen.dart';
-import 'package:filli/Screens/TodScreen.dart';
+import 'package:filli/Screens/TodoScreen.dart';
 import 'package:filli/services/custom_page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

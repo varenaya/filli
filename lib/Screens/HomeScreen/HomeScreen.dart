@@ -17,18 +17,6 @@ class HomeScreen extends StatefulWidget with NavigationStates {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser;
-  // var _isInit = true;
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit == true) {
-  //     Provider.of<Currentuser>(context).userdata(user);
-  //   }
-  //   setState(() {
-  //     _isInit = false;
-  //   });
-
-  //   super.didChangeDependencies();
-  // }
 
   @override
   Widget build(BuildContext context) {

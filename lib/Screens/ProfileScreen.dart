@@ -1,6 +1,6 @@
 import 'package:filli/Screens/LinksScreen.dart';
 import 'package:filli/Screens/NotesScreen.dart';
-import 'package:filli/Screens/TodScreen.dart';
+import 'package:filli/Screens/TodoScreen.dart';
 import 'package:filli/services/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:filli/services/currentuser.dart';
 import 'package:filli/services/custom_page_route.dart';
@@ -32,8 +32,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Stack(
               children: [
                 Container(
-                  color: Colors.redAccent.shade100,
                   height: size.height * 0.2,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(
+                        'assets/images/header.jpg',
+                      ),
+                    ),
+                  ),
                 ),
                 Column(
                   children: [
