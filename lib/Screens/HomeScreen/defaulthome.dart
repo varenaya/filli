@@ -22,31 +22,62 @@ class _DefaultHomeState extends State<DefaultHome> {
     return Column(
       children: [
         Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(30),
+            ),
+            gradient: LinearGradient(
+              colors: [
+                Colors.orangeAccent,
+                Colors.redAccent,
+              ],
+            ),
+          ),
           height: 108.0 + size.height * 0.06,
           child: Column(
             children: [
               SizedBox(
-                height: 60,
+                height: 48,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 100.0),
-                    child: Text(
-                      '${widget.userdata!['companies'].firstWhere((element) => element['selected'] == true, orElse: () => null)['name']}',
-                      style: TextStyle(
-                        fontFamily: 'Anteb',
-                        fontSize: 28,
-                        color: Colors.black,
-                      ),
+                    padding: const EdgeInsets.only(left: 60.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage(
+                                'assets/images/Company_defimg.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          '${widget.userdata!['companies'].firstWhere((element) => element['selected'] == true, orElse: () => null)['name']}',
+                          style: TextStyle(
+                            fontFamily: 'Anteb',
+                            fontSize: 28,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   IconButton(
                     onPressed: () {},
                     icon: Icon(
                       Icons.search,
-                      color: Colors.black,
+                      color: Colors.white,
                       size: 28,
                     ),
                   )
@@ -64,6 +95,9 @@ class _DefaultHomeState extends State<DefaultHome> {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: size.height * 0.03,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 30.0),
                       child: Row(
