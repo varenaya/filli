@@ -26,6 +26,10 @@ class _SideBarState extends State<SideBar>
   late StreamSink<bool> isSidebarOpenedSink;
   final user = FirebaseAuth.instance.currentUser;
   final _animationDuration = const Duration(milliseconds: 400);
+  bool isHomeselected = true;
+  bool isProfileselected = false;
+  bool isDmselected = false;
+  bool ismentionsselected = false;
 
   @override
   void initState() {
@@ -188,46 +192,102 @@ class _SideBarState extends State<SideBar>
                           InkWell(
                             onTap: () {
                               onIconPressed();
+                              setState(() {
+                                isHomeselected = true;
+                                isDmselected = false;
+                                isProfileselected = false;
+                                ismentionsselected = false;
+                              });
                               BlocProvider.of<NavigationBloc>(context)
                                   .add(NavigationEvents.HomeScreenClickedEvent);
                             },
-                            child: MenuItem(
-                              icon: Icons.home,
-                              title: "Home",
-                            ),
+                            child: isHomeselected
+                                ? Container(
+                                    color: const Color(0xFF3935B7),
+                                    child: MenuItem(
+                                      icon: Icons.home,
+                                      title: "Home",
+                                    ),
+                                  )
+                                : MenuItem(
+                                    icon: Icons.home,
+                                    title: "Home",
+                                  ),
                           ),
                           InkWell(
                             onTap: () {
+                              setState(() {
+                                isHomeselected = false;
+                                isDmselected = false;
+                                isProfileselected = true;
+                                ismentionsselected = false;
+                              });
                               onIconPressed();
                               BlocProvider.of<NavigationBloc>(context).add(
                                   NavigationEvents.ProfileScreenClickedEvent);
                             },
-                            child: MenuItem(
-                              icon: Icons.person,
-                              title: "You",
-                            ),
+                            child: isProfileselected
+                                ? Container(
+                                    color: const Color(0xFF3935B7),
+                                    child: MenuItem(
+                                      icon: Icons.person,
+                                      title: "You",
+                                    ),
+                                  )
+                                : MenuItem(
+                                    icon: Icons.person,
+                                    title: "You",
+                                  ),
                           ),
                           InkWell(
                             onTap: () {
+                              setState(() {
+                                isHomeselected = false;
+                                isDmselected = true;
+                                isProfileselected = false;
+                                ismentionsselected = false;
+                              });
                               onIconPressed();
                               BlocProvider.of<NavigationBloc>(context)
                                   .add(NavigationEvents.DmScreenClickedEvent);
                             },
-                            child: MenuItem(
-                              icon: Icons.chat_outlined,
-                              title: "Dms",
-                            ),
+                            child: isDmselected
+                                ? Container(
+                                    color: const Color(0xFF3935B7),
+                                    child: MenuItem(
+                                      icon: Icons.chat_outlined,
+                                      title: "Dms",
+                                    ),
+                                  )
+                                : MenuItem(
+                                    icon: Icons.chat_outlined,
+                                    title: "Dms",
+                                  ),
                           ),
                           InkWell(
                             onTap: () {
+                              setState(() {
+                                isHomeselected = false;
+                                isDmselected = false;
+                                isProfileselected = false;
+                                ismentionsselected = true;
+                              });
                               onIconPressed();
                               BlocProvider.of<NavigationBloc>(context).add(
                                   NavigationEvents.MentionsScreenClickedEvent);
                             },
-                            child: MenuItem(
-                              icon: Icons.alternate_email_sharp,
-                              title: "Mentions",
-                            ),
+                            child: ismentionsselected
+                                ? Container(
+                                    color: const Color(0xFF3935B7),
+                                    child: MenuItem(
+                                      icon: Icons.alternate_email_sharp,
+                                      title: "Mentions",
+                                    ),
+                                  )
+                                : MenuItem(
+                                    icon: Icons.alternate_email_sharp,
+                                    title: "Mentions",
+                                  ),
                           ),
                           Divider(
                             height: 64,
