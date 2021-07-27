@@ -5,6 +5,7 @@ import 'package:filli/services/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:filli/services/currentuser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget with NavigationStates {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser;
+  DateTime timeBackPressed = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +41,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
           final userdata = snapshot.data;
           Provider.of<Currentuser>(context).userdata(userdata!.data());
-          return Scaffold(
-            body: userdata.data()!['companies'].isEmpty
-                ? NoCompanies(
-                    size: size,
-                    userdata: userdata.data(),
-                  )
-                : DefaultHome(
-                    userdata: userdata.data(),
-                    size: size,
-                  ),
+          return WillPopScope(
+            onWillPop: () async {
+              final difference = DateTime.now().difference(timeBackPressed);
+              final isExitWarning = difference >= Duration(seconds: 2);
+              timeBackPressed = DateTime.now();
+              if (isExitWarning) {
+                final message = 'Press back again to exit';
+                Fluttertoast.showToast(msg: message, fontSize: 18);
+                return false;
+              } else {
+                Fluttertoast.cancel();
+                return true;
+              }
+            },
+            child: Scaffold(
+              body: userdata.data()!['companies'].isEmpty
+                  ? NoCompanies(
+                      size: size,
+                      userdata: userdata.data(),
+                    )
+                  : DefaultHome(
+                      userdata: userdata.data(),
+                      size: size,
+                    ),
+            ),
           );
         });
   }
