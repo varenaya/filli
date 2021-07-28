@@ -46,7 +46,7 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Anteb',
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

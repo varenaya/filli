@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class FilesScreen extends StatefulWidget {
-  const FilesScreen({Key? key}) : super(key: key);
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  _FilesScreenState createState() => _FilesScreenState();
+  _SettingsScreenState createState() => _SettingsScreenState();
 }
 
-class _FilesScreenState extends State<FilesScreen> {
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -35,7 +35,7 @@ class _FilesScreenState extends State<FilesScreen> {
                           )),
                       Expanded(
                         child: Text(
-                          'Files',
+                          'Settings',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Anteb',
@@ -44,20 +44,9 @@ class _FilesScreenState extends State<FilesScreen> {
                           ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.search),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.add,
-                            ),
-                          ),
-                        ],
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.search),
                       ),
                     ],
                   ),

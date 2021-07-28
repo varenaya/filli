@@ -39,7 +39,7 @@ class _TodoScreenState extends State<TodoScreen> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Anteb',
-                            fontSize: 20,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

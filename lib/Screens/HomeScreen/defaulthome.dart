@@ -27,17 +27,14 @@ class _DefaultHomeState extends State<DefaultHome> {
               bottom: Radius.circular(30),
             ),
             gradient: LinearGradient(
-              colors: [
-                Colors.orangeAccent,
-                Colors.redAccent,
-              ],
+              colors: [Colors.blue, Colors.indigo],
             ),
           ),
           height: 108.0 + size.height * 0.06,
           child: Column(
             children: [
               SizedBox(
-                height: 48,
+                height: 50,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,9 +44,10 @@ class _DefaultHomeState extends State<DefaultHome> {
                     child: Row(
                       children: [
                         Container(
-                          height: 60,
-                          width: 60,
+                          height: 70,
+                          width: 70,
                           decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
                             image: DecorationImage(
                               fit: BoxFit.fill,
@@ -67,7 +65,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                           style: TextStyle(
                             fontFamily: 'Anteb',
                             fontSize: 28,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -82,9 +80,6 @@ class _DefaultHomeState extends State<DefaultHome> {
                     ),
                   )
                 ],
-              ),
-              SizedBox(
-                height: size.height * 0.06,
               ),
             ],
           ),

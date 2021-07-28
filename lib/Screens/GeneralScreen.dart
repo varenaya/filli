@@ -141,7 +141,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                             '# general',
                             style: TextStyle(
                               fontFamily: 'Anteb',
-                              fontSize: 20,
+                              fontSize: 22,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

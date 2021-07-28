@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:filli/Screens/AddLobbyScreen.dart';
+import 'package:filli/Screens/SettingsScreen.dart';
 import 'package:filli/services/custom_page_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -173,7 +174,14 @@ class _SideBarState extends State<SideBar>
                               companies.isEmpty
                                   ? SizedBox()
                                   : IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          CustomPageRoute(
+                                            child: SettingsScreen(),
+                                            direction: AxisDirection.right,
+                                          ),
+                                        );
+                                      },
                                       icon: Icon(
                                         Icons.settings,
                                         color: Colors.white,
@@ -327,12 +335,12 @@ class _SideBarState extends State<SideBar>
                         child: Container(
                           width: 35,
                           height: 110,
-                          color: Color(0xFF262AAA),
+                          color: const Color(0xFF262AAA),
                           alignment: Alignment.centerLeft,
                           child: AnimatedIcon(
                             progress: _animationController.view,
                             icon: AnimatedIcons.menu_close,
-                            color: Color(0xFF1BB5FD),
+                            color: const Color(0xFF1BB5FD),
                             size: 25,
                           ),
                         ),

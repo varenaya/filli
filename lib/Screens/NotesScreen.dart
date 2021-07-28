@@ -39,7 +39,7 @@ class _NotesScreenState extends State<NotesScreen> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Anteb',
-                            fontSize: 20,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

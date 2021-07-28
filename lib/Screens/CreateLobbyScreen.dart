@@ -9,6 +9,7 @@ List<GlobalKey<FormState>> formKeys = [
 class MyData {
   String _companyname = '';
   String _projectname = '';
+  List<String> emails = [];
 }
 
 class CreateLobbyScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static MyData data = MyData();
   var _isLoading = false;
+  bool emailskipped = false;
   bool complete = false;
   Future<void> _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
@@ -41,6 +43,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           print('test');
           print('company: ${data._companyname}');
           print('project: ${data._projectname}');
+          print('emails: ${data.emails}');
         });
         setState(() {
           _isLoading = false;
@@ -84,24 +87,20 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
       state: StepState.indexed,
       content: Form(
         key: formKeys[0],
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              key: ValueKey('company name'),
-              keyboardType: TextInputType.text,
-              autocorrect: false,
-              onSaved: (value) {
-                data._companyname = value!;
-              },
-              validator: (value) {
-                if (value!.isEmpty || value.length < 2) {
-                  return 'Please enter a name';
-                }
-                return null;
-              },
-              decoration: InputDecoration(labelText: 'Organization Name'),
-            ),
-          ],
+        child: TextFormField(
+          key: ValueKey('company name'),
+          keyboardType: TextInputType.text,
+          autocorrect: false,
+          onSaved: (value) {
+            data._companyname = value!;
+          },
+          validator: (value) {
+            if (value!.isEmpty || value.length < 2) {
+              return 'Please enter a name';
+            }
+            return null;
+          },
+          decoration: InputDecoration(labelText: 'Organization Name'),
         ),
       ),
     ),
@@ -124,24 +123,20 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
       ),
       content: Form(
         key: formKeys[1],
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              key: ValueKey('project name'),
-              keyboardType: TextInputType.text,
-              autocorrect: false,
-              onSaved: (value) {
-                data._projectname = value!;
-              },
-              validator: (value) {
-                if (value!.isEmpty || value.length < 2) {
-                  return 'Please enter a project name';
-                }
-                return null;
-              },
-              decoration: InputDecoration(labelText: 'Project Name'),
-            ),
-          ],
+        child: TextFormField(
+          key: ValueKey('project name'),
+          keyboardType: TextInputType.text,
+          autocorrect: false,
+          onSaved: (value) {
+            data._projectname = value!;
+          },
+          validator: (value) {
+            if (value!.isEmpty || value.length < 2) {
+              return 'Please enter a project name';
+            }
+            return null;
+          },
+          decoration: InputDecoration(labelText: 'Project Name'),
         ),
       ),
     ),
@@ -164,7 +159,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
       ),
       content: Form(
         key: formKeys[2],
-        child: Row(
+        child: Column(
           children: <Widget>[
             ElevatedButton(
               onPressed: () {},
@@ -234,7 +229,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                         'Create your lobby here',
                         style: TextStyle(
                           fontFamily: 'Anteb',
-                          fontSize: 18,
+                          fontSize: 22,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
