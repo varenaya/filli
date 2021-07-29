@@ -1,7 +1,7 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 List<GlobalKey<FormState>> formKeys = [
-  GlobalKey<FormState>(),
   GlobalKey<FormState>(),
   GlobalKey<FormState>(),
 ];
@@ -27,6 +27,20 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
   var _isLoading = false;
   bool emailskipped = false;
   bool complete = false;
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
   Future<void> _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -140,62 +154,6 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
         ),
       ),
     ),
-    Step(
-      isActive: true,
-      state: StepState.indexed,
-      title: const Text(
-        'Teammates',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-          fontFamily: 'Anteb',
-        ),
-      ),
-      subtitle: const Text(
-        "Add your teammates for the project",
-        style: TextStyle(
-          fontSize: 15,
-        ),
-      ),
-      content: Form(
-        key: formKeys[2],
-        child: Column(
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                primary: Colors.indigo.shade900,
-                elevation: 2,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 22,
-                  vertical: 10,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-              child: Text(
-                'Send Invites',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Anteb',
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Text(
-              'or Skip for later',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
   ];
 
   @override
@@ -209,7 +167,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               height: size.height * 0.06,
             ),
             Container(
-              height: size.height * 0.94,
+              height: size.height * 0.6,
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -349,10 +307,284 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                                     if (currStep < steps.length - 1) {
                                       currStep = currStep + 1;
                                     } else {
-                                      _trySubmit().then((value) {
-                                        currStep = 0;
-                                        complete = true;
-                                      });
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return StatefulBuilder(builder:
+                                              (context, setModalState) {
+                                            return SingleChildScrollView(
+                                              child: Container(
+                                                padding: EdgeInsets.only(
+                                                  bottom: MediaQuery.of(context)
+                                                      .viewInsets
+                                                      .bottom,
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        top: 5,
+                                                        left: 30,
+                                                      ),
+                                                      child: ListTile(
+                                                        minLeadingWidth: 10,
+                                                        leading: CircleAvatar(
+                                                          radius: 12,
+                                                          child: Text(
+                                                            '3',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                          backgroundColor:
+                                                              Colors.blue,
+                                                        ),
+                                                        title: Text(
+                                                          'Teammates',
+                                                          style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontFamily: 'Anteb',
+                                                          ),
+                                                        ),
+                                                        subtitle: Text(
+                                                          'Add your teammates for the project',
+                                                          style: TextStyle(
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Column(
+                                                      children: <Widget>[
+                                                        Container(
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                ...data.emails
+                                                                    .map(
+                                                                      (email) =>
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(
+                                                                          left:
+                                                                              15,
+                                                                        ),
+                                                                        child: Chip(
+                                                                            avatar: CircleAvatar(
+                                                                              backgroundColor: Colors.grey,
+                                                                              child: Text(
+                                                                                email.substring(0, 1),
+                                                                                style: TextStyle(color: Colors.black),
+                                                                              ),
+                                                                            ),
+                                                                            labelPadding: EdgeInsets.only(
+                                                                              left: 10,
+                                                                              right: 5,
+                                                                            ),
+                                                                            label: Text(
+                                                                              email,
+                                                                              style: TextStyle(fontSize: 16, color: Colors.black),
+                                                                            ),
+                                                                            onDeleted: () {
+                                                                              setModalState(() {
+                                                                                data.emails.removeWhere((element) => email == element);
+                                                                              });
+                                                                            }),
+                                                                      ),
+                                                                    )
+                                                                    .toList(),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                            left: 30,
+                                                            right: 30,
+                                                            bottom: 15,
+                                                            top: 5,
+                                                          ),
+                                                          child: TextField(
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .emailAddress,
+                                                            decoration:
+                                                                InputDecoration
+                                                                    .collapsed(
+                                                              hintText:
+                                                                  'Enter emails of your teammates',
+                                                            ),
+                                                            controller:
+                                                                _emailController,
+                                                            onChanged:
+                                                                (String val) {
+                                                              if (val.endsWith(
+                                                                      ' ') &&
+                                                                  EmailValidator
+                                                                      .validate(
+                                                                          val.trim()))
+                                                                setModalState(
+                                                                    () {
+                                                                  data.emails.add(
+                                                                      _emailController
+                                                                          .text
+                                                                          .trim());
+                                                                  _emailController
+                                                                      .text = '';
+                                                                });
+                                                            },
+                                                            onEditingComplete:
+                                                                () {
+                                                              setModalState(() {
+                                                                if (EmailValidator
+                                                                    .validate(
+                                                                        _emailController
+                                                                            .text
+                                                                            .trim())) {
+                                                                  data.emails.add(
+                                                                      _emailController
+                                                                          .text
+                                                                          .trim());
+                                                                  _emailController
+                                                                      .text = '';
+                                                                }
+                                                              });
+                                                            },
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        bottom: 20,
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          ElevatedButton(
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                              data.emails
+                                                                      .isEmpty
+                                                                  ? showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (ctx) {
+                                                                        return AlertDialog(
+                                                                          title:
+                                                                              const Text(
+                                                                            'Are you sure?',
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                          ),
+                                                                          content:
+                                                                              Text(
+                                                                            'Do you want to continue without adding teammates?',
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                          ),
+                                                                          actions: <
+                                                                              Widget>[
+                                                                            TextButton(
+                                                                              child: const Text('CANCEL'),
+                                                                              onPressed: () {
+                                                                                Navigator.of(ctx).pop();
+                                                                              },
+                                                                            ),
+                                                                            TextButton(
+                                                                              child: const Text('CONTINUE'),
+                                                                              onPressed: () {
+                                                                                Navigator.of(ctx).pop();
+                                                                                _trySubmit().then((value) {
+                                                                                  complete = true;
+                                                                                  data.emails = [];
+                                                                                });
+                                                                              },
+                                                                            )
+                                                                          ],
+                                                                        );
+                                                                      })
+                                                                  : _trySubmit()
+                                                                      .then(
+                                                                          (value) {
+                                                                      complete =
+                                                                          true;
+                                                                      data.emails =
+                                                                          [];
+                                                                    });
+                                                            },
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              primary: Colors
+                                                                  .green
+                                                                  .shade900,
+                                                              elevation: 0,
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                horizontal: 22,
+                                                                vertical: 10,
+                                                              ),
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                              ),
+                                                            ),
+                                                            child: Text(
+                                                              'Continue',
+                                                              style: TextStyle(
+                                                                fontSize: 15,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Text(
+                                                              'CANCEL',
+                                                              style: TextStyle(
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                        },
+                                      );
+                                      currStep = 0;
                                     }
                                   }
                                 });
