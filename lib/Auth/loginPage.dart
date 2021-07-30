@@ -200,7 +200,10 @@ class _LoginPageState extends State<LoginPage> {
                             'companies': [],
                             'invitation': [],
                             'status': '',
-                            'online': true,
+                            'online': {
+                              'status': true,
+                              'auto': true,
+                            },
                           });
                       });
                     },

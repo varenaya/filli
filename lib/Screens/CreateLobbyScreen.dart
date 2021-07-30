@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 List<GlobalKey<FormState>> formKeys = [
@@ -13,7 +15,8 @@ class MyData {
 }
 
 class CreateLobbyScreen extends StatefulWidget {
-  const CreateLobbyScreen({Key? key}) : super(key: key);
+  final userdata;
+  const CreateLobbyScreen({Key? key, this.userdata}) : super(key: key);
 
   @override
   _CreateLobbyScreenState createState() => _CreateLobbyScreenState();
@@ -53,21 +56,198 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
         setState(() {
           _isLoading = true;
         });
-        await Future.delayed(Duration(seconds: 5)).then((value) {
-          print('test');
-          print('company: ${data._companyname}');
-          print('project: ${data._projectname}');
-          print('emails: ${data.emails}');
+        final DocumentReference docRef =
+            FirebaseFirestore.instance.collection('companies').doc();
+        await docRef.set({
+          'company_name': data._companyname.trim(),
+          'company_imgurl': '',
+          'company_id': docRef.id,
+          'createdAt': DateTime.now(),
+          'createrid': widget.userdata['userId'],
+          'members_count': data.emails.length,
+          'channels': ['general', 'casual'],
+          'projects': [data._projectname.trim()],
         });
+        if (data.emails.isNotEmpty) {
+          await FirebaseFirestore.instance
+              .collection('companies')
+              .doc(docRef.id)
+              .collection('members')
+              .add({
+            'emails': widget.userdata['email'],
+            'role': 'creater',
+          });
+          data.emails.forEach((element) async {
+            await FirebaseFirestore.instance
+                .collection('companies')
+                .doc(docRef.id)
+                .collection('members')
+                .add({
+              'emails': element,
+              'role': 'member',
+            });
+          });
+        } else {
+          await FirebaseFirestore.instance
+              .collection('companies')
+              .doc(docRef.id)
+              .collection('members')
+              .add({
+            'emails': widget.userdata['email'],
+            'role': 'creater',
+          });
+        }
+
+        final DocumentReference projectdocRef = FirebaseFirestore.instance
+            .collection('companies')
+            .doc(docRef.id)
+            .collection('Projects')
+            .doc();
+        await projectdocRef.set({
+          'project_name': data._projectname,
+          'project_id': projectdocRef.id,
+          'description': '',
+          'channels': ['general', 'casual'],
+          'members_count': data.emails.length,
+          'createdAt': DateTime.now(),
+          'createrid': widget.userdata['userId'],
+        });
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(widget.userdata['userId'])
+            .update({
+          'companies': FieldValue.arrayUnion([
+            {
+              'name': data._companyname,
+              'company_id': docRef.id,
+              'selected': true,
+            }
+          ])
+        });
+        await FirebaseFirestore.instance
+            .collection('companies')
+            .doc(docRef.id)
+            .collection('general')
+            .add({
+          'type': 'Channel_data',
+          'channel_name': 'general',
+          'description':
+              'This channel is the main channel of the lobby, which includes all teammates. It can be used for team-wide communication and announcements',
+          'members_count': data.emails.length,
+          'createdAt': DateTime.now(),
+          'createdby': widget.userdata['username'],
+          'createrid': widget.userdata['userId'],
+        });
+        await FirebaseFirestore.instance
+            .collection('companies')
+            .doc(docRef.id)
+            .collection('casual')
+            .add({
+          'type': 'Channel_data',
+          'channel_name': 'casual',
+          'description':
+              'This is a fun channel, to enjoy with your teammates. Share memes, GIFs or anything to loose up some stress!',
+          'members_count': data.emails.length,
+          'createdAt': DateTime.now(),
+          'createdby': widget.userdata['username'],
+          'createrid': widget.userdata['userId'],
+        });
+        await FirebaseFirestore.instance
+            .collection('companies')
+            .doc(docRef.id)
+            .collection('Projects')
+            .doc(projectdocRef.id)
+            .collection('general')
+            .add({
+          'type': 'Channel_data',
+          'channel_name': 'general',
+          'description':
+              'This channel is the main channel of the project, which includes all project members. It can be used for project-wide communication and announcements',
+          'members_count': data.emails.length,
+          'createdAt': DateTime.now(),
+          'createdby': widget.userdata['username'],
+          'createrid': widget.userdata['userId'],
+        });
+        await FirebaseFirestore.instance
+            .collection('companies')
+            .doc(docRef.id)
+            .collection('Projects')
+            .doc(projectdocRef.id)
+            .collection('casual')
+            .add({
+          'type': 'Channel_data',
+          'channel_name': 'casual',
+          'description':
+              'This is a fun channel, to enjoy with your project teammates. Share memes, GIFs or anything to loose up some stress!',
+          'members_count': data.emails.length,
+          'createdAt': DateTime.now(),
+          'createdby': widget.userdata['username'],
+          'createrid': widget.userdata['userId'],
+        });
+        if (data.emails.isNotEmpty) {
+          await FirebaseFirestore.instance
+              .collection('companies')
+              .doc(docRef.id)
+              .collection('Projects')
+              .doc(projectdocRef.id)
+              .collection('members')
+              .add({
+            'emails': widget.userdata['email'],
+            'role': 'creater',
+          });
+          data.emails.forEach((element) async {
+            await FirebaseFirestore.instance
+                .collection('companies')
+                .doc(docRef.id)
+                .collection('Projects')
+                .doc(projectdocRef.id)
+                .collection('members')
+                .add({
+              'emails': element,
+              'role': 'member',
+            });
+            await FirebaseFirestore.instance
+                .collection('users')
+                .where('email', isEqualTo: element)
+                .get()
+                .then((value) {
+              if (value.docs.isNotEmpty) {
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(value.docs.first.data()['userId'])
+                    .update({
+                  'invitation': FieldValue.arrayUnion([
+                    {
+                      'img_url': '',
+                      'company': data._companyname,
+                      'company_id': docRef.id,
+                      'invitedby': widget.userdata['username'],
+                    }
+                  ]),
+                });
+              }
+            });
+          });
+        } else {
+          await FirebaseFirestore.instance
+              .collection('companies')
+              .doc(docRef.id)
+              .collection('Projects')
+              .doc(projectdocRef.id)
+              .collection('members')
+              .add({
+            'emails': widget.userdata['email'],
+            'role': 'creater',
+          });
+        }
         setState(() {
           _isLoading = false;
         });
-      } catch (err) {
+      } on FirebaseException catch (err) {
         var message = 'An error occured, please check your credentials!';
-        // if (err.message != null) {
-
-        //   message = err.message!;
-        // }
+        if (err.message != null) {
+          message = err.message!;
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -477,6 +657,16 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                                                         children: [
                                                           ElevatedButton(
                                                             onPressed: () {
+                                                              if (EmailValidator
+                                                                  .validate(
+                                                                      _emailController
+                                                                          .text
+                                                                          .trim())) {
+                                                                data.emails.add(
+                                                                    _emailController
+                                                                        .text
+                                                                        .trim());
+                                                              }
                                                               Navigator.of(
                                                                       context)
                                                                   .pop();

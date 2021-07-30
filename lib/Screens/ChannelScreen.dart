@@ -1,14 +1,14 @@
 import 'package:filli/widgets/chat_tile.dart';
 import 'package:flutter/material.dart';
 
-class GeneralScreen extends StatefulWidget {
-  const GeneralScreen({Key? key}) : super(key: key);
+class ChannelScreen extends StatefulWidget {
+  const ChannelScreen({Key? key}) : super(key: key);
 
   @override
-  _GeneralScreenState createState() => _GeneralScreenState();
+  _ChannelScreenState createState() => _ChannelScreenState();
 }
 
-class _GeneralScreenState extends State<GeneralScreen> {
+class _ChannelScreenState extends State<ChannelScreen> {
   // GlobalKey _key = LabeledGlobalKey("button_icon");
   // late OverlayEntry _overlayEntry;
   // late Size buttonSize;

@@ -1,5 +1,5 @@
 import 'package:filli/Screens/FilesScreen.dart';
-import 'package:filli/Screens/GeneralScreen.dart';
+import 'package:filli/Screens/ChannelScreen.dart';
 import 'package:filli/Screens/LinksScreen.dart';
 import 'package:filli/Screens/NotesScreen.dart';
 import 'package:filli/Screens/TodoScreen.dart';
@@ -318,7 +318,7 @@ class _ProjectOverviewScreenState extends State<ProjectOverviewScreen> {
                     onTap: () {
                       Navigator.of(context).push(
                         CustomPageRoute(
-                          child: GeneralScreen(),
+                          child: ChannelScreen(),
                           direction: AxisDirection.left,
                         ),
                       );

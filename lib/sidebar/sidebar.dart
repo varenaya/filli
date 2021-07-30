@@ -132,7 +132,7 @@ class _SideBarState extends State<SideBar>
                                             )
                                           : CircleAvatar(
                                               radius: 45,
-                                              backgroundColor: Colors.black,
+                                              backgroundColor: Colors.grey,
                                             ),
                                   SizedBox(
                                     width: 15,

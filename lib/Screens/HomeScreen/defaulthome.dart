@@ -3,7 +3,7 @@ import 'package:filli/services/custom_page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../GeneralScreen.dart';
+import '../ChannelScreen.dart';
 
 class DefaultHome extends StatefulWidget {
   final size;
@@ -152,7 +152,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                     onTap: () {
                       Navigator.of(context).push(
                         CustomPageRoute(
-                          child: GeneralScreen(),
+                          child: ChannelScreen(),
                           direction: AxisDirection.left,
                         ),
                       );

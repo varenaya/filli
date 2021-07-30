@@ -142,15 +142,16 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                                     leading: Container(
                                       width: 50,
                                       height: 50,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: companies[index]['i_url'] == ''
-                                              ? AssetImage(
-                                                      'assets/images/Company_defimg.png')
-                                                  as ImageProvider
-                                              : NetworkImage(
-                                                  companies[index]['i_url'],
-                                                ),
+                                      color: Colors.grey.shade400,
+                                      child: Center(
+                                        child: Text(
+                                          companies[index]['name']
+                                              .substring(0, 1),
+                                          style: TextStyle(
+                                            fontSize: 25,
+                                            fontFamily: 'Anteb',
+                                            fontWeight: FontWeight.w400,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -289,7 +290,9 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                       onTap: () {
                         Navigator.of(context).push(
                           CustomPageRoute(
-                            child: CreateLobbyScreen(),
+                            child: CreateLobbyScreen(
+                              userdata: widget.userdata,
+                            ),
                             direction: AxisDirection.up,
                           ),
                         );

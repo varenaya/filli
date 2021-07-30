@@ -78,7 +78,7 @@ class _NoCompaniesState extends State<NoCompanies> {
             onPressed: () {
               Navigator.of(context).push(
                 CustomPageRoute(
-                  child: CreateLobbyScreen(),
+                  child: CreateLobbyScreen(userdata: widget.userdata),
                   direction: AxisDirection.left,
                 ),
               );

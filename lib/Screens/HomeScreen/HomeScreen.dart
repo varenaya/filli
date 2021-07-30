@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:filli/Screens/HomeScreen/NoCompanies.dart';
 import 'package:filli/Screens/HomeScreen/defaulthome.dart';
 import 'package:filli/services/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:filli/services/currentuser.dart';
+import 'package:filli/services/data_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           final userdata = snapshot.data;
-          Provider.of<Currentuser>(context).userdata(userdata!.data());
+          Provider.of<DataProvider>(context).userdata(userdata!.data());
           return WillPopScope(
             onWillPop: () async {
               final difference = DateTime.now().difference(timeBackPressed);

@@ -46,7 +46,10 @@ class _SignupPageState extends State<SignupPage> {
             'companies': [],
             'invitation': [],
             'status': '',
-            'online': true,
+            'online': {
+              'status': true,
+              'auto': true,
+            },
           });
         } on FirebaseAuthException catch (err) {
           var message = 'An error occured, please check your credentials!';

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:filli/Auth/loginPage.dart';
-import 'package:filli/services/currentuser.dart';
+import 'package:filli/services/data_provider.dart';
 import 'package:filli/services/googlesigninprovider.dart';
 import 'package:filli/sidebar/sidebar_layout.dart';
 
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<GoogleSignInProvider>(
           create: (context) => GoogleSignInProvider(),
         ),
-        ChangeNotifierProvider<Currentuser>(
-          create: (context) => Currentuser(),
+        ChangeNotifierProvider<DataProvider>(
+          create: (context) => DataProvider(),
         ),
       ],
       child: MaterialApp(
