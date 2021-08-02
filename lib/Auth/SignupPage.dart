@@ -45,7 +45,8 @@ class _SignupPageState extends State<SignupPage> {
             'userId': authresult.user!.uid,
             'companies': [],
             'invitation': [],
-            'status': '',
+            'projects': [],
+            'status': {},
             'online': {
               'status': true,
               'auto': true,

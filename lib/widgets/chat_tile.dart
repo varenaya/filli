@@ -23,7 +23,7 @@ class ChatTile extends StatelessWidget {
               leading: CircleAvatar(),
               title: Text(
                 'Jemini Tore',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -34,7 +34,7 @@ class ChatTile extends StatelessWidget {
                     children: [
                       Text(
                         'July 15',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -64,12 +64,12 @@ class ChatTile extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            padding: EdgeInsets.only(left: 5),
+                            padding: const EdgeInsets.only(left: 5),
                             child: RichText(
                               text: TextSpan(
                                 text:
                                     'In general, we can make random colors ourselves with only a few lines of code so there’s no need to using a third-party plugin. However, using plugins also has a few advantages. For example, a package name random_color generates random colors that are visually pleasing and',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.black87,
                                   fontFamily: 'Kollektif',
@@ -77,7 +77,7 @@ class ChatTile extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                     text: ' (edited)',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.black45,
                                       fontFamily: 'Kollektif',

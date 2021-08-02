@@ -199,7 +199,8 @@ class _LoginPageState extends State<LoginPage> {
                             'userId': user.uid,
                             'companies': [],
                             'invitation': [],
-                            'status': '',
+                            'projects': [],
+                            'status': {},
                             'online': {
                               'status': true,
                               'auto': true,

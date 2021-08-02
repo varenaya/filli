@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:filli/Auth/loginPage.dart';
+import 'package:filli/models/userdata.dart';
 import 'package:filli/services/data_provider.dart';
+import 'package:filli/services/datastreams.dart';
 import 'package:filli/services/googlesigninprovider.dart';
 import 'package:filli/sidebar/sidebar_layout.dart';
 
@@ -59,7 +61,11 @@ class MyApp extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
               }
-              return SideBarLayout();
+              return StreamProvider<UserData>.value(
+                value: DataStream().userdata(),
+                initialData: DataStream().initialuserdata,
+                child: SideBarLayout(),
+              );
             }
             return LoginPage();
           },

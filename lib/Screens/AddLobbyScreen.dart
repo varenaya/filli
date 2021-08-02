@@ -1,10 +1,11 @@
 import 'package:filli/Screens/CreateLobbyScreen.dart';
+import 'package:filli/models/userdata.dart';
 import 'package:filli/services/custom_page_route.dart';
 import 'package:flutter/material.dart';
 
 class AddLobbyScreen extends StatefulWidget {
-  final userdata;
-  const AddLobbyScreen({Key? key, this.userdata}) : super(key: key);
+  final UserData userdata;
+  const AddLobbyScreen({Key? key, required this.userdata}) : super(key: key);
 
   @override
   _AddLobbyScreenState createState() => _AddLobbyScreenState();
@@ -15,8 +16,8 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    List companies = widget.userdata['companies'];
-    List invitations = widget.userdata['invitation'];
+    List companies = widget.userdata.companies;
+    List invitations = widget.userdata.invitation;
 
     return Scaffold(
       body: SingleChildScrollView(

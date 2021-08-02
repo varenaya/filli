@@ -1,8 +1,8 @@
 import 'package:filli/Screens/LinksScreen.dart';
 import 'package:filli/Screens/NotesScreen.dart';
 import 'package:filli/Screens/TodoScreen.dart';
+import 'package:filli/models/userdata.dart';
 import 'package:filli/services/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:filli/services/data_provider.dart';
 import 'package:filli/services/custom_page_route.dart';
 
 import 'package:filli/services/googlesigninprovider.dart';
@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final userData = Provider.of<DataProvider>(context, listen: false).userData;
+    final userData = Provider.of<UserData>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -363,11 +363,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 100,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: userData['image_url'] == ""
+                        image: userData.imageUrl == ""
                             ? AssetImage('assets/images/Person.png')
                                 as ImageProvider
                             : NetworkImage(
-                                userData['image_url'],
+                                userData.imageUrl,
                               ),
                       ),
                     ),
@@ -384,7 +384,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          userData['username'],
+                          userData.username,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,

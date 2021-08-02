@@ -64,9 +64,9 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           'company_id': docRef.id,
           'createdAt': DateTime.now(),
           'createrid': widget.userdata['userId'],
-          'members_count': data.emails.length,
+          'members_count': data.emails.length + 1,
           'channels': ['general', 'casual'],
-          'projects': [data._projectname.trim()],
+          'projects': [],
         });
         if (data.emails.isNotEmpty) {
           await FirebaseFirestore.instance
@@ -76,6 +76,9 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               .add({
             'emails': widget.userdata['email'],
             'role': 'creater',
+            'inv_accepted': true,
+            'username': widget.userdata['username'],
+            'userId': widget.userdata['userId'],
           });
           data.emails.forEach((element) async {
             await FirebaseFirestore.instance
@@ -85,6 +88,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                 .add({
               'emails': element,
               'role': 'member',
+              'inv_accepted': false,
             });
           });
         } else {
@@ -95,6 +99,9 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               .add({
             'emails': widget.userdata['email'],
             'role': 'creater',
+            'inv_accepted': true,
+            'username': widget.userdata['username'],
+            'userId': widget.userdata['userId'],
           });
         }
 
@@ -108,10 +115,22 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           'project_id': projectdocRef.id,
           'description': '',
           'channels': ['general', 'casual'],
-          'members_count': data.emails.length,
+          'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
           'createrid': widget.userdata['userId'],
         });
+        await FirebaseFirestore.instance
+            .collection('companies')
+            .doc(docRef.id)
+            .update({
+          'projects': FieldValue.arrayUnion([
+            {
+              'project_name': data._projectname,
+              'project_id': projectdocRef.id,
+            }
+          ])
+        });
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(widget.userdata['userId'])
@@ -120,7 +139,16 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
             {
               'name': data._companyname,
               'company_id': docRef.id,
+              'company_imgurl': '',
               'selected': true,
+            }
+          ]),
+          'projects': FieldValue.arrayUnion([
+            {
+              'project_name': data._projectname,
+              'company_name': data._companyname,
+              'project_id': projectdocRef.id,
+              'company_id': docRef.id,
             }
           ])
         });
@@ -133,7 +161,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           'channel_name': 'general',
           'description':
               'This channel is the main channel of the lobby, which includes all teammates. It can be used for team-wide communication and announcements',
-          'members_count': data.emails.length,
+          'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
           'createdby': widget.userdata['username'],
           'createrid': widget.userdata['userId'],
@@ -147,7 +175,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           'channel_name': 'casual',
           'description':
               'This is a fun channel, to enjoy with your teammates. Share memes, GIFs or anything to loose up some stress!',
-          'members_count': data.emails.length,
+          'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
           'createdby': widget.userdata['username'],
           'createrid': widget.userdata['userId'],
@@ -163,7 +191,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           'channel_name': 'general',
           'description':
               'This channel is the main channel of the project, which includes all project members. It can be used for project-wide communication and announcements',
-          'members_count': data.emails.length,
+          'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
           'createdby': widget.userdata['username'],
           'createrid': widget.userdata['userId'],
@@ -179,7 +207,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           'channel_name': 'casual',
           'description':
               'This is a fun channel, to enjoy with your project teammates. Share memes, GIFs or anything to loose up some stress!',
-          'members_count': data.emails.length,
+          'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
           'createdby': widget.userdata['username'],
           'createrid': widget.userdata['userId'],
@@ -194,6 +222,9 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               .add({
             'emails': widget.userdata['email'],
             'role': 'creater',
+            'inv_accepted': true,
+            'username': widget.userdata['username'],
+            'userId': widget.userdata['userId'],
           });
           data.emails.forEach((element) async {
             await FirebaseFirestore.instance
@@ -205,6 +236,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                 .add({
               'emails': element,
               'role': 'member',
+              'inv_accepted': false,
             });
             await FirebaseFirestore.instance
                 .collection('users')
@@ -238,6 +270,9 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               .add({
             'emails': widget.userdata['email'],
             'role': 'creater',
+            'inv_accepted': true,
+            'username': widget.userdata['username'],
+            'userId': widget.userdata['userId'],
           });
         }
         setState(() {

@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           final userdata = snapshot.data;
-          Provider.of<DataProvider>(context).userdata(userdata!.data());
+
           return WillPopScope(
             onWillPop: () async {
               final difference = DateTime.now().difference(timeBackPressed);
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
             child: Scaffold(
-              body: userdata.data()!['companies'].isEmpty
+              body: userdata!.data()!['companies'].isEmpty
                   ? NoCompanies(
                       size: size,
                       userdata: userdata.data(),
