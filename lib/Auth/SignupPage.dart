@@ -16,6 +16,8 @@ class _SignupPageState extends State<SignupPage> {
   String _userpassword = '';
   String _userName = '';
   var _isLoading = false;
+  final _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     void _trySubmit() async {
@@ -34,10 +36,7 @@ class _SignupPageState extends State<SignupPage> {
             email: _userEmail,
             password: _userpassword,
           );
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(authresult.user!.uid)
-              .set({
+          await _firestore.collection('users').doc(authresult.user!.uid).set({
             'username': _userName,
             'email': _userEmail,
             'image_url': '',

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:filli/Screens/CreateLobbyScreen.dart';
 import 'package:filli/models/userdata.dart';
 import 'package:filli/services/custom_page_route.dart';
@@ -12,6 +13,7 @@ class AddLobbyScreen extends StatefulWidget {
 }
 
 class _AddLobbyScreenState extends State<AddLobbyScreen> {
+  final _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -113,68 +115,151 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () async {
-                                // await FirebaseFirestore.instance
-                                //     .collection('users')
-                                //     .doc(user!.uid)
-                                //     .update({
-                                //   'companies': FieldValue.delete(),
-                                // }).then((value) async {
-                                //   await FirebaseFirestore.instance
-                                //       .collection('users')
-                                //       .doc(user!.uid)
-                                //       .update({
-                                //         'companies': FieldValue.arrayUnion([userdata.data()!['companies'][index+1],])
-                                //       });
-                                // });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: Colors.lightBlue.shade100,
-                                    ),
-                                  ),
-                                  padding: EdgeInsets.only(bottom: 5, top: 5),
-                                  child: ListTile(
-                                    leading: Container(
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.grey.shade400,
-                                      child: Center(
-                                        child: Text(
-                                          companies[index]['name']
-                                              .substring(0, 1),
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                            fontFamily: 'Anteb',
-                                            fontWeight: FontWeight.w400,
+                            return companies[index]['selected'] == true
+                                ? Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                          color: Colors.lightBlue.shade100,
+                                        ),
+                                      ),
+                                      padding:
+                                          EdgeInsets.only(bottom: 5, top: 5),
+                                      child: ListTile(
+                                        leading: Container(
+                                          width: 50,
+                                          height: 50,
+                                          color: Colors.cyan.shade800,
+                                          child: Center(
+                                            child: Text(
+                                              companies[index]['name']
+                                                  .toLowerCase()
+                                                  .substring(0, 1),
+                                              style: TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
+                                        ),
+                                        title: Text(
+                                          '${companies[index]['name']}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey.shade900),
+                                        ),
+                                        trailing: companies[index]['selected']
+                                            ? Text(
+                                                'Selected',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color:
+                                                        Colors.green.shade900),
+                                              )
+                                            : SizedBox(),
+                                      ),
+                                    ),
+                                  )
+                                : InkWell(
+                                    onTap: () async {
+                                      final selectedcompanydata =
+                                          companies.firstWhere(
+                                              (element) =>
+                                                  element['selected'] == true,
+                                              orElse: () => null);
+                                      await _firestore
+                                          .collection('users')
+                                          .doc(widget.userdata.userId)
+                                          .update({
+                                        'companies': FieldValue.arrayUnion([
+                                          {
+                                            'name': companies[index]['name'],
+                                            'company_id': companies[index]
+                                                ['company_id'],
+                                            'company_imgurl': companies[index]
+                                                ['company_imgurl'],
+                                            'selected': true,
+                                          },
+                                          {
+                                            'name': selectedcompanydata['name'],
+                                            'company_id': selectedcompanydata[
+                                                'company_id'],
+                                            'company_imgurl':
+                                                selectedcompanydata[
+                                                    'company_imgurl'],
+                                            'selected': false,
+                                          }
+                                        ]),
+                                      }).then((value) async {
+                                        await _firestore
+                                            .collection('users')
+                                            .doc(widget.userdata.userId)
+                                            .update({
+                                          'companies': FieldValue.arrayRemove([
+                                            companies[index],
+                                            selectedcompanydata
+                                          ]),
+                                        });
+                                      }).then((value) =>
+                                              Navigator.of(context).pop());
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                            color: Colors.lightBlue.shade100,
+                                          ),
+                                        ),
+                                        padding:
+                                            EdgeInsets.only(bottom: 5, top: 5),
+                                        child: ListTile(
+                                          leading: Container(
+                                            width: 50,
+                                            height: 50,
+                                            color: Colors.cyan.shade800,
+                                            child: Center(
+                                              child: Text(
+                                                companies[index]['name']
+                                                    .toLowerCase()
+                                                    .substring(0, 1),
+                                                style: TextStyle(
+                                                  fontSize: 30,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          title: Text(
+                                            '${companies[index]['name']}',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.grey.shade900),
+                                          ),
+                                          trailing: companies[index]['selected']
+                                              ? Text(
+                                                  'Selected',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors
+                                                          .green.shade900),
+                                                )
+                                              : SizedBox(),
                                         ),
                                       ),
                                     ),
-                                    title: Text(
-                                      '${companies[index]['name']}',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey.shade900),
-                                    ),
-                                    trailing: companies[index]['selected']
-                                        ? Text(
-                                            'Selected',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green.shade900),
-                                          )
-                                        : SizedBox(),
-                                  ),
-                                ),
-                              ),
-                            );
+                                  );
                           },
                           itemCount: companies.length,
                         ),

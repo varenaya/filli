@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:filli/models/userdata.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,8 @@ class MyData {
 }
 
 class CreateLobbyScreen extends StatefulWidget {
-  final userdata;
-  const CreateLobbyScreen({Key? key, this.userdata}) : super(key: key);
+  final UserData userdata;
+  const CreateLobbyScreen({Key? key, required this.userdata}) : super(key: key);
 
   @override
   _CreateLobbyScreenState createState() => _CreateLobbyScreenState();
@@ -31,6 +32,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
   bool emailskipped = false;
   bool complete = false;
   late TextEditingController _emailController;
+  final _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -57,31 +59,31 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           _isLoading = true;
         });
         final DocumentReference docRef =
-            FirebaseFirestore.instance.collection('companies').doc();
+            _firestore.collection('companies').doc();
         await docRef.set({
           'company_name': data._companyname.trim(),
           'company_imgurl': '',
           'company_id': docRef.id,
           'createdAt': DateTime.now(),
-          'createrid': widget.userdata['userId'],
+          'createrid': widget.userdata.userId,
           'members_count': data.emails.length + 1,
           'channels': ['general', 'casual'],
           'projects': [],
         });
         if (data.emails.isNotEmpty) {
-          await FirebaseFirestore.instance
+          await _firestore
               .collection('companies')
               .doc(docRef.id)
               .collection('members')
               .add({
-            'emails': widget.userdata['email'],
+            'emails': widget.userdata.email,
             'role': 'creater',
             'inv_accepted': true,
-            'username': widget.userdata['username'],
-            'userId': widget.userdata['userId'],
+            'username': widget.userdata.username,
+            'userId': widget.userdata.username,
           });
           data.emails.forEach((element) async {
-            await FirebaseFirestore.instance
+            await _firestore
                 .collection('companies')
                 .doc(docRef.id)
                 .collection('members')
@@ -92,20 +94,20 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
             });
           });
         } else {
-          await FirebaseFirestore.instance
+          await _firestore
               .collection('companies')
               .doc(docRef.id)
               .collection('members')
               .add({
-            'emails': widget.userdata['email'],
+            'emails': widget.userdata.email,
             'role': 'creater',
             'inv_accepted': true,
-            'username': widget.userdata['username'],
-            'userId': widget.userdata['userId'],
+            'username': widget.userdata.username,
+            'userId': widget.userdata.userId,
           });
         }
 
-        final DocumentReference projectdocRef = FirebaseFirestore.instance
+        final DocumentReference projectdocRef = _firestore
             .collection('companies')
             .doc(docRef.id)
             .collection('Projects')
@@ -113,16 +115,14 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
         await projectdocRef.set({
           'project_name': data._projectname,
           'project_id': projectdocRef.id,
-          'description': '',
+          'description':
+              'This description defines the purpose of the project, objectives for other projects members so thta they can get hold of the things they are dealing with. This can be edited later.',
           'channels': ['general', 'casual'],
           'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
-          'createrid': widget.userdata['userId'],
+          'createrid': widget.userdata.userId,
         });
-        await FirebaseFirestore.instance
-            .collection('companies')
-            .doc(docRef.id)
-            .update({
+        await _firestore.collection('companies').doc(docRef.id).update({
           'projects': FieldValue.arrayUnion([
             {
               'project_name': data._projectname,
@@ -131,28 +131,72 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
           ])
         });
 
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(widget.userdata['userId'])
-            .update({
-          'companies': FieldValue.arrayUnion([
-            {
-              'name': data._companyname,
-              'company_id': docRef.id,
-              'company_imgurl': '',
-              'selected': true,
-            }
-          ]),
-          'projects': FieldValue.arrayUnion([
-            {
-              'project_name': data._projectname,
-              'company_name': data._companyname,
-              'project_id': projectdocRef.id,
-              'company_id': docRef.id,
-            }
-          ])
-        });
-        await FirebaseFirestore.instance
+        final selectedcompanydata = widget.userdata.companies.firstWhere(
+            (element) => element['selected'] == true,
+            orElse: () => null);
+
+        if (selectedcompanydata != null) {
+          await _firestore
+              .collection('users')
+              .doc(widget.userdata.userId)
+              .update({
+            'companies': FieldValue.arrayUnion([
+              {
+                'name': data._companyname,
+                'company_id': docRef.id,
+                'company_imgurl': '',
+                'selected': true,
+              },
+              {
+                'name': selectedcompanydata['name'],
+                'company_id': selectedcompanydata['company_id'],
+                'company_imgurl': selectedcompanydata['company_imgurl'],
+                'selected': false,
+              }
+            ]),
+            'projects': FieldValue.arrayUnion([
+              {
+                'project_id': projectdocRef.id,
+                'company_id': docRef.id,
+              }
+            ])
+          });
+          await _firestore
+              .collection('users')
+              .doc(widget.userdata.userId)
+              .update({
+            'companies': FieldValue.arrayRemove([
+              {
+                'name': selectedcompanydata['name'],
+                'company_id': selectedcompanydata['company_id'],
+                'company_imgurl': selectedcompanydata['company_imgurl'],
+                'selected': true,
+              }
+            ]),
+          });
+        } else {
+          await _firestore
+              .collection('users')
+              .doc(widget.userdata.userId)
+              .update({
+            'companies': FieldValue.arrayUnion([
+              {
+                'name': data._companyname,
+                'company_id': docRef.id,
+                'company_imgurl': '',
+                'selected': true,
+              },
+            ]),
+            'projects': FieldValue.arrayUnion([
+              {
+                'project_id': projectdocRef.id,
+                'company_id': docRef.id,
+              }
+            ])
+          });
+        }
+
+        await _firestore
             .collection('companies')
             .doc(docRef.id)
             .collection('general')
@@ -163,10 +207,10 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               'This channel is the main channel of the lobby, which includes all teammates. It can be used for team-wide communication and announcements',
           'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
-          'createdby': widget.userdata['username'],
-          'createrid': widget.userdata['userId'],
+          'createdby': widget.userdata.username,
+          'createrid': widget.userdata.userId,
         });
-        await FirebaseFirestore.instance
+        await _firestore
             .collection('companies')
             .doc(docRef.id)
             .collection('casual')
@@ -177,10 +221,10 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               'This is a fun channel, to enjoy with your teammates. Share memes, GIFs or anything to loose up some stress!',
           'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
-          'createdby': widget.userdata['username'],
-          'createrid': widget.userdata['userId'],
+          'createdby': widget.userdata.username,
+          'createrid': widget.userdata.userId,
         });
-        await FirebaseFirestore.instance
+        await _firestore
             .collection('companies')
             .doc(docRef.id)
             .collection('Projects')
@@ -193,10 +237,10 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               'This channel is the main channel of the project, which includes all project members. It can be used for project-wide communication and announcements',
           'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
-          'createdby': widget.userdata['username'],
-          'createrid': widget.userdata['userId'],
+          'createdby': widget.userdata.username,
+          'createrid': widget.userdata.userId,
         });
-        await FirebaseFirestore.instance
+        await _firestore
             .collection('companies')
             .doc(docRef.id)
             .collection('Projects')
@@ -209,25 +253,25 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               'This is a fun channel, to enjoy with your project teammates. Share memes, GIFs or anything to loose up some stress!',
           'members_count': data.emails.length + 1,
           'createdAt': DateTime.now(),
-          'createdby': widget.userdata['username'],
-          'createrid': widget.userdata['userId'],
+          'createdby': widget.userdata.username,
+          'createrid': widget.userdata.userId,
         });
         if (data.emails.isNotEmpty) {
-          await FirebaseFirestore.instance
+          await _firestore
               .collection('companies')
               .doc(docRef.id)
               .collection('Projects')
               .doc(projectdocRef.id)
               .collection('members')
               .add({
-            'emails': widget.userdata['email'],
+            'emails': widget.userdata.email,
             'role': 'creater',
             'inv_accepted': true,
-            'username': widget.userdata['username'],
-            'userId': widget.userdata['userId'],
+            'username': widget.userdata.username,
+            'userId': widget.userdata.userId,
           });
           data.emails.forEach((element) async {
-            await FirebaseFirestore.instance
+            await _firestore
                 .collection('companies')
                 .doc(docRef.id)
                 .collection('Projects')
@@ -238,13 +282,13 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               'role': 'member',
               'inv_accepted': false,
             });
-            await FirebaseFirestore.instance
+            await _firestore
                 .collection('users')
                 .where('email', isEqualTo: element)
                 .get()
                 .then((value) {
               if (value.docs.isNotEmpty) {
-                FirebaseFirestore.instance
+                _firestore
                     .collection('users')
                     .doc(value.docs.first.data()['userId'])
                     .update({
@@ -253,7 +297,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                       'img_url': '',
                       'company': data._companyname,
                       'company_id': docRef.id,
-                      'invitedby': widget.userdata['username'],
+                      'invitedby': widget.userdata.username,
                     }
                   ]),
                 });
@@ -261,18 +305,18 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
             });
           });
         } else {
-          await FirebaseFirestore.instance
+          await _firestore
               .collection('companies')
               .doc(docRef.id)
               .collection('Projects')
               .doc(projectdocRef.id)
               .collection('members')
               .add({
-            'emails': widget.userdata['email'],
+            'emails': widget.userdata.email,
             'role': 'creater',
             'inv_accepted': true,
-            'username': widget.userdata['username'],
-            'userId': widget.userdata['userId'],
+            'username': widget.userdata.username,
+            'userId': widget.userdata.userId,
           });
         }
         setState(() {

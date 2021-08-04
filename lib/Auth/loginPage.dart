@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   String _userEmail = '';
   String _userpassword = '';
   var _isLoading = false;
+  final _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                         final user = FirebaseAuth.instance.currentUser;
                         final usertime = user!.metadata.creationTime;
                         if (DateTime.now().difference(usertime!).inSeconds < 10)
-                          await FirebaseFirestore.instance
+                          await _firestore
                               .collection('users')
                               .doc(user.uid)
                               .set({

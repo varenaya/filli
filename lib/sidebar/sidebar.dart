@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:filli/Screens/AddLobbyScreen.dart';
 import 'package:filli/Screens/SettingsScreen.dart';
 import 'package:filli/models/userdata.dart';
@@ -69,12 +68,9 @@ class _SideBarState extends State<SideBar>
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    // late Map companydata = Provider.of<DataProvider>(
-    //   context,
-    //   listen: false,
-    // ).companyData;
 
     final userData = Provider.of<UserData>(context);
+    Provider.of<DataProvider>(context).userData(userData);
 
     final selectedcompanydata = userData.companies.firstWhere(
         (element) => element['selected'] == true,

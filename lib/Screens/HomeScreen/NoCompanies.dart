@@ -1,3 +1,4 @@
+import 'package:filli/models/userdata.dart';
 import 'package:filli/services/custom_page_route.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +6,7 @@ import '../CreateLobbyScreen.dart';
 
 class NoCompanies extends StatefulWidget {
   final size;
-  final Map? userdata;
+  final UserData userdata;
   const NoCompanies({Key? key, this.size, required this.userdata})
       : super(key: key);
 
@@ -52,7 +53,7 @@ class _NoCompaniesState extends State<NoCompanies> {
               ),
               children: [
                 TextSpan(
-                  text: ' ${widget.userdata!['email']}.',
+                  text: ' ${widget.userdata.email}.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -112,7 +113,7 @@ class _NoCompaniesState extends State<NoCompanies> {
             height: 1,
             thickness: 1,
           ),
-          widget.userdata!['invitation'].isEmpty
+          widget.userdata.invitation.isEmpty
               ? Column(
                   children: [
                     SizedBox(
@@ -156,28 +157,28 @@ class _NoCompaniesState extends State<NoCompanies> {
                           height: 50,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: widget.userdata!['invitation'][index]
+                              image: widget.userdata.invitation[index]
                                           ['img_url'] ==
                                       ""
                                   ? AssetImage(
                                           'assets/images/Company_defimg.png')
                                       as ImageProvider
                                   : NetworkImage(
-                                      widget.userdata!['invitation'][index]
+                                      widget.userdata.invitation[index]
                                           ['img_url'],
                                     ),
                             ),
                           ),
                         ),
                         title: Text(
-                          '${widget.userdata!['invitation'][index]['company']}',
+                          '${widget.userdata.invitation[index]['company']}',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         subtitle: Text(
-                          '${widget.userdata!['invitation'][index]['invitedby']} invited you',
+                          '${widget.userdata.invitation[index]['invitedby']} invited you',
                         ),
                         trailing: Padding(
                           padding: const EdgeInsets.only(right: 15.0),
@@ -203,7 +204,7 @@ class _NoCompaniesState extends State<NoCompanies> {
                       ),
                     ),
                   ),
-                  itemCount: widget.userdata!['invitation'].length,
+                  itemCount: widget.userdata.invitation.length,
                 ),
         ],
       ),

@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:filli/Screens/ProjectOverviewScreen.dart';
+import 'package:filli/models/userdata.dart';
 import 'package:filli/services/custom_page_route.dart';
-import 'package:filli/services/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 import '../ChannelScreen.dart';
 
 class DefaultHome extends StatefulWidget {
   final size;
-  final Map? userdata;
+  final UserData? userdata;
   const DefaultHome({Key? key, this.size, required this.userdata})
       : super(key: key);
 
@@ -19,14 +18,15 @@ class DefaultHome extends StatefulWidget {
 }
 
 class _DefaultHomeState extends State<DefaultHome> {
+  final _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     var size = widget.size;
-    final selectedcompanydata = widget.userdata!['companies'].firstWhere(
+    final selectedcompanydata = widget.userdata!.companies.firstWhere(
         (element) => element['selected'] == true,
         orElse: () => null);
     return StreamBuilder<DocumentSnapshot<Map<dynamic, dynamic>>>(
-        stream: FirebaseFirestore.instance
+        stream: _firestore
             .collection('companies')
             .doc(selectedcompanydata['company_id'])
             .snapshots(),
@@ -41,42 +41,44 @@ class _DefaultHomeState extends State<DefaultHome> {
             }
           }
           final companyData = snapshot.data;
-          // Future<void> changeimg() async {
-          //   await Future.delayed(Duration(seconds: 2)).then((value) async {
-          //     if (selectedcompanydata['company_imgurl'] !=
-          //         companyData!.data()!['company_imgurl']) {
-          //       await FirebaseFirestore.instance
-          //           .collection('users')
-          //           .doc(widget.userdata!['userId'])
-          //           .update({
-          //         'companies': FieldValue.arrayUnion([
-          //           {
-          //             'company_id': companyData.data()!['company_id'],
-          //             'name': companyData.data()!['company_name'],
-          //             'company_imgurl': companyData.data()!['company_imgurl'],
-          //             'selected': true,
-          //           }
-          //         ]),
-          //       });
-          //       await FirebaseFirestore.instance
-          //           .collection('users')
-          //           .doc(widget.userdata!['userId'])
-          //           .update({
-          //         'companies': FieldValue.arrayRemove([
-          //           {
-          //             'company_id': companyData.data()!['company_id'],
-          //             'name': companyData.data()!['company_name'],
-          //             'company_imgurl': selectedcompanydata['company_imgurl'],
-          //             'selected': true,
-          //           }
-          //         ]),
-          //       });
-          //     }
-          //   });
-          // }
+          Future<void> changeimg() async {
+            if (selectedcompanydata['company_id'] ==
+                companyData!.data()!['company_id']) {
+              if ((selectedcompanydata['company_imgurl'] !=
+                      companyData.data()!['company_imgurl']) ||
+                  (selectedcompanydata['name'] !=
+                      companyData.data()!['company_name'])) {
+                await _firestore
+                    .collection('users')
+                    .doc(widget.userdata!.userId)
+                    .update({
+                  'companies': FieldValue.arrayUnion([
+                    {
+                      'company_id': companyData.data()!['company_id'],
+                      'name': companyData.data()!['company_name'],
+                      'company_imgurl': companyData.data()!['company_imgurl'],
+                      'selected': selectedcompanydata['selected'],
+                    }
+                  ]),
+                });
+                await _firestore
+                    .collection('users')
+                    .doc(widget.userdata!.userId)
+                    .update({
+                  'companies': FieldValue.arrayRemove([
+                    {
+                      'company_id': companyData.data()!['company_id'],
+                      'name': selectedcompanydata['name'],
+                      'company_imgurl': selectedcompanydata['company_imgurl'],
+                      'selected': true,
+                    }
+                  ]),
+                });
+              }
+            }
+          }
 
-          // changeimg();
-
+          changeimg();
           return Column(
             children: [
               Container(
@@ -85,7 +87,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                     bottom: Radius.circular(30),
                   ),
                   gradient: LinearGradient(
-                    colors: [Colors.blue, Colors.indigo],
+                    colors: [Colors.cyan, Colors.indigo],
                   ),
                 ),
                 height: 108.0 + size.height * 0.06,
@@ -215,7 +217,12 @@ class _DefaultHomeState extends State<DefaultHome> {
                           onTap: () {
                             Navigator.of(context).push(
                               CustomPageRoute(
-                                child: ChannelScreen(),
+                                child: ChannelScreen(
+                                  comapnyid: companyData.data()!['company_id'],
+                                  projectid: '',
+                                  channelname: companyData.data()!['channels']
+                                      [i],
+                                ),
                                 direction: AxisDirection.left,
                               ),
                             );
@@ -307,7 +314,7 @@ class _DefaultHomeState extends State<DefaultHome> {
                     ),
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
-                        (ctx, i) => widget.userdata!['projects'].firstWhere(
+                        (ctx, i) => widget.userdata!.projects.firstWhere(
                                     (element) =>
                                         element['project_id'] ==
                                         companyData.data()!['projects'][i]
@@ -318,7 +325,13 @@ class _DefaultHomeState extends State<DefaultHome> {
                                 onTap: () {
                                   Navigator.of(context).push(
                                     CustomPageRoute(
-                                      child: ProjectOverviewScreen(),
+                                      child: ProjectOverviewScreen(
+                                        projectId:
+                                            companyData.data()!['projects'][i]
+                                                ['project_id'],
+                                        companyId:
+                                            companyData.data()!['company_id'],
+                                      ),
                                       direction: AxisDirection.left,
                                     ),
                                   );
