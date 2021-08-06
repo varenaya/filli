@@ -18,33 +18,14 @@ class ChatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        (previouschatdata != {} &&
-                previouschatdata['senderId'] == chatdata['senderId'])
-            ? ListTile(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 0,
-                ),
-                subtitle: Column(
+        if (previouschatdata != {} &&
+            previouschatdata['senderId'] == chatdata['senderId'])
+          (chatdata['createdAt'].toDate())
+                      .difference(previouschatdata['createdAt'].toDate())
+                      .inMinutes <
+                  1
+              ? Column(
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          '${DateFormat.yMMMd().format(chatdata['createdAt'].toDate())}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat.jm().format(chatdata['createdAt'].toDate())}',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
                     InkWell(
                       onLongPress: () {
                         FocusScope.of(context).unfocus();
@@ -56,55 +37,155 @@ class ChatTile extends StatelessWidget {
                           builder: (context) => Chatactions(),
                         );
                       },
-                      child: Container(
-                        width: size.width * 0.8,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    left: BorderSide(
-                                      width: 4,
-                                      color: Colors
-                                          .primaries[chatdata['colortile_int']],
-                                    ),
-                                  ),
-                                ),
-                                padding: const EdgeInsets.only(left: 5),
-                                child: RichText(
-                                  text: TextSpan(
-                                    text: chatdata['text'],
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black87,
-                                      fontFamily: 'Kollektif',
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: chatdata['edited']
-                                            ? ' (edited)'
-                                            : '',
-                                        style: const TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.black45,
-                                          fontFamily: 'Kollektif',
-                                          fontWeight: FontWeight.w100,
-                                        ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 56,
+                        ),
+                        child: Container(
+                          width: size.width * 0.8,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(
+                                        width: 4,
+                                        color: Colors.primaries[
+                                            chatdata['colortile_int']],
                                       ),
-                                    ],
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text: chatdata['text'],
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black87,
+                                        fontFamily: 'Kollektif',
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: chatdata['edited']
+                                              ? ' (edited)'
+                                              : '',
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black45,
+                                            fontFamily: 'Kollektif',
+                                            fontWeight: FontWeight.w100,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 5,
+                    ),
                   ],
-                ),
-              )
-            : ListTile(
+                )
+              : ListTile(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 0,
+                  ),
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.white,
+                  ),
+                  subtitle: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '${DateFormat.yMMMd().format(chatdata['createdAt'].toDate())}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            '${DateFormat.jm().format(chatdata['createdAt'].toDate())}',
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      InkWell(
+                        onLongPress: () {
+                          FocusScope.of(context).unfocus();
+                          showModalBottomSheet(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            context: context,
+                            builder: (context) => Chatactions(),
+                          );
+                        },
+                        child: Container(
+                          width: size.width * 0.8,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(
+                                        width: 4,
+                                        color: Colors.primaries[
+                                            chatdata['colortile_int']],
+                                      ),
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text: chatdata['text'],
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black87,
+                                        fontFamily: 'Kollektif',
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: chatdata['edited']
+                                              ? ' (edited)'
+                                              : '',
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black45,
+                                            fontFamily: 'Kollektif',
+                                            fontWeight: FontWeight.w100,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+        else
+          Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              ListTile(
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 0,
                 ),
@@ -203,9 +284,8 @@ class ChatTile extends StatelessWidget {
                   ],
                 ),
               ),
-        SizedBox(
-          height: 15,
-        ),
+            ],
+          ),
       ],
     );
   }

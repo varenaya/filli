@@ -43,43 +43,47 @@ class _ChannelScreenState extends State<ChannelScreen> {
     final userdata = Provider.of<DataProvider>(context).userdata;
     void _secondMessage() async {
       FocusScope.of(context).unfocus();
-      widget.projectid == ''
-          ? await _firestore
-              .collection('companies')
-              .doc(widget.comapnyid)
-              .collection(widget.channelname)
-              .add({
-              'type': 'chat',
-              'senderId': userdata.userId,
-              'sendername': userdata.username,
-              'senderimg': userdata.imageUrl,
-              'createdAt': DateTime.now(),
-              'text': _enteredMessage,
-              'colortile_int': _random.nextInt(Colors.primaries.length),
-              'edited': false,
-              'reactions': [],
-              'mentions': [],
-              'replies': [],
-            })
-          : await _firestore
-              .collection('companies')
-              .doc(widget.comapnyid)
-              .collection('projects')
-              .doc(widget.projectid)
-              .collection(widget.channelname)
-              .add({
-              'type': 'chat',
-              'senderId': userdata.userId,
-              'sendername': userdata.username,
-              'senderimg': userdata.imageUrl,
-              'createdAt': DateTime.now(),
-              'text': _enteredMessage,
-              'colortile_int': _random.nextInt(Colors.primaries.length),
-              'edited': false,
-              'reactions': [],
-              'mentions': [],
-              'replies': [],
-            });
+      try {
+        widget.projectid == ''
+            ? await _firestore
+                .collection('companies')
+                .doc(widget.comapnyid)
+                .collection(widget.channelname)
+                .add({
+                'type': 'chat',
+                'senderId': userdata.userId,
+                'sendername': userdata.username,
+                'senderimg': userdata.imageUrl,
+                'createdAt': DateTime.now(),
+                'text': _enteredMessage,
+                'colortile_int': _random.nextInt(Colors.primaries.length),
+                'edited': false,
+                'reactions': [],
+                'mentions': [],
+                'replies': [],
+              })
+            : await _firestore
+                .collection('companies')
+                .doc(widget.comapnyid)
+                .collection('Projects')
+                .doc(widget.projectid)
+                .collection(widget.channelname)
+                .add({
+                'type': 'chat',
+                'senderId': userdata.userId,
+                'sendername': userdata.username,
+                'senderimg': userdata.imageUrl,
+                'createdAt': DateTime.now(),
+                'text': _enteredMessage,
+                'colortile_int': _random.nextInt(Colors.primaries.length),
+                'edited': false,
+                'reactions': [],
+                'mentions': [],
+                'replies': [],
+              });
+      } on FirebaseException catch (err) {
+        print(err.message);
+      }
 
       _textEditingController.clear();
     }
@@ -176,21 +180,45 @@ class _ChannelScreenState extends State<ChannelScreen> {
                                   }
                                 }
                                 final chatdata = snapshot.data!.docs;
-                                return ListView.builder(
-                                  keyboardDismissBehavior:
-                                      ScrollViewKeyboardDismissBehavior.onDrag,
-                                  reverse: true,
-                                  itemBuilder: (context, index) =>
-                                      chatdata[index].data()['type'] == 'chat'
-                                          ? ChatTile(
-                                              chatdata: chatdata[index].data(),
-                                              previouschatdata:
-                                                  chatdata[index + 1].data(),
-                                              size: size,
-                                            )
-                                          : SizedBox(),
-                                  itemCount: chatdata.length,
-                                );
+                                return chatdata.length == 1
+                                    ? Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image(
+                                            image: AssetImage(
+                                                'assets/images/no_activity.png'),
+                                          ),
+                                          Text(
+                                            'No activity..',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontFamily: 'Anteb'),
+                                          )
+                                        ],
+                                      )
+                                    : ListView.builder(
+                                        keyboardDismissBehavior:
+                                            ScrollViewKeyboardDismissBehavior
+                                                .onDrag,
+                                        reverse: true,
+                                        itemBuilder: (context, index) =>
+                                            chatdata[index].data()['type'] ==
+                                                    'chat'
+                                                ? ChatTile(
+                                                    chatdata:
+                                                        chatdata[index].data(),
+                                                    previouschatdata: index +
+                                                                1 >
+                                                            chatdata.length
+                                                        ? {}
+                                                        : chatdata[index + 1]
+                                                            .data(),
+                                                    size: size,
+                                                  )
+                                                : SizedBox(),
+                                        itemCount: chatdata.length,
+                                      );
                               })
                           : StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                               stream: _firestore
@@ -212,21 +240,45 @@ class _ChannelScreenState extends State<ChannelScreen> {
                                   }
                                 }
                                 final chatdata = snapshot.data!.docs;
-                                return ListView.builder(
-                                  keyboardDismissBehavior:
-                                      ScrollViewKeyboardDismissBehavior.onDrag,
-                                  reverse: true,
-                                  itemBuilder: (context, index) =>
-                                      chatdata[index].data()['type'] == 'chat'
-                                          ? ChatTile(
-                                              chatdata: chatdata[index].data(),
-                                              previouschatdata:
-                                                  chatdata[index + 1].data(),
-                                              size: size,
-                                            )
-                                          : SizedBox(),
-                                  itemCount: chatdata.length,
-                                );
+                                return chatdata.length == 1
+                                    ? Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image(
+                                            image: AssetImage(
+                                                'assets/images/no_activity.png'),
+                                          ),
+                                          Text(
+                                            'No activity..',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontFamily: 'Anteb'),
+                                          )
+                                        ],
+                                      )
+                                    : ListView.builder(
+                                        keyboardDismissBehavior:
+                                            ScrollViewKeyboardDismissBehavior
+                                                .onDrag,
+                                        reverse: true,
+                                        itemBuilder: (context, index) =>
+                                            chatdata[index].data()['type'] ==
+                                                    'chat'
+                                                ? ChatTile(
+                                                    chatdata:
+                                                        chatdata[index].data(),
+                                                    previouschatdata: index +
+                                                                1 >
+                                                            chatdata.length
+                                                        ? {}
+                                                        : chatdata[index + 1]
+                                                            .data(),
+                                                    size: size,
+                                                  )
+                                                : SizedBox(),
+                                        itemCount: chatdata.length,
+                                      );
                               }),
                     ),
                     Container(
