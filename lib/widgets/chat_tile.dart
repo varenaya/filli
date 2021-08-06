@@ -30,11 +30,14 @@ class ChatTile extends StatelessWidget {
                       onLongPress: () {
                         FocusScope.of(context).unfocus();
                         showModalBottomSheet(
+                          isScrollControlled: true,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           context: context,
-                          builder: (context) => Chatactions(),
+                          builder: (context) => Chatactions(
+                            chatdata: chatdata,
+                          ),
                         );
                       },
                       child: Padding(
@@ -124,11 +127,14 @@ class ChatTile extends StatelessWidget {
                         onLongPress: () {
                           FocusScope.of(context).unfocus();
                           showModalBottomSheet(
+                            isScrollControlled: true,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             context: context,
-                            builder: (context) => Chatactions(),
+                            builder: (context) => Chatactions(
+                              chatdata: chatdata,
+                            ),
                           );
                         },
                         child: Container(
@@ -229,11 +235,14 @@ class ChatTile extends StatelessWidget {
                       onLongPress: () {
                         FocusScope.of(context).unfocus();
                         showModalBottomSheet(
+                          isScrollControlled: true,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           context: context,
-                          builder: (context) => Chatactions(),
+                          builder: (context) => Chatactions(
+                            chatdata: chatdata,
+                          ),
                         );
                       },
                       child: Container(

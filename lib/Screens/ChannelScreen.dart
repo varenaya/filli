@@ -44,47 +44,38 @@ class _ChannelScreenState extends State<ChannelScreen> {
     void _secondMessage() async {
       FocusScope.of(context).unfocus();
       try {
-        widget.projectid == ''
-            ? await _firestore
+        final DocumentReference docRef = widget.projectid == ''
+            ? _firestore
                 .collection('companies')
                 .doc(widget.comapnyid)
                 .collection(widget.channelname)
-                .add({
-                'type': 'chat',
-                'senderId': userdata.userId,
-                'sendername': userdata.username,
-                'senderimg': userdata.imageUrl,
-                'createdAt': DateTime.now(),
-                'text': _enteredMessage,
-                'colortile_int': _random.nextInt(Colors.primaries.length),
-                'edited': false,
-                'reactions': [],
-                'mentions': [],
-                'replies': [],
-              })
-            : await _firestore
+                .doc()
+            : _firestore
                 .collection('companies')
                 .doc(widget.comapnyid)
                 .collection('Projects')
                 .doc(widget.projectid)
                 .collection(widget.channelname)
-                .add({
-                'type': 'chat',
-                'senderId': userdata.userId,
-                'sendername': userdata.username,
-                'senderimg': userdata.imageUrl,
-                'createdAt': DateTime.now(),
-                'text': _enteredMessage,
-                'colortile_int': _random.nextInt(Colors.primaries.length),
-                'edited': false,
-                'reactions': [],
-                'mentions': [],
-                'replies': [],
-              });
+                .doc();
+        await docRef.set({
+          'type': 'chat',
+          'senderId': userdata.userId,
+          'sendername': userdata.username,
+          'senderimg': userdata.imageUrl,
+          'messageid': docRef.id,
+          'createdAt': DateTime.now(),
+          'text': _enteredMessage,
+          'colortile_int': _random.nextInt(Colors.primaries.length),
+          'edited': false,
+          'pinned': false,
+          'reactions': [],
+          'mentions': [],
+          'saved': [],
+          'replies': [],
+        });
       } on FirebaseException catch (err) {
         print(err.message);
       }
-
       _textEditingController.clear();
     }
 
