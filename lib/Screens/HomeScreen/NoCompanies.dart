@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:filli/models/userdata.dart';
 import 'package:filli/services/custom_page_route.dart';
 import 'package:flutter/material.dart';
@@ -47,15 +48,17 @@ class _NoCompaniesState extends State<NoCompanies> {
             text: TextSpan(
               text: 'You\'ve logged in as',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 16,
                 fontWeight: FontWeight.w400,
+                fontFamily: 'Kollektif',
                 color: Colors.black,
               ),
               children: [
                 TextSpan(
                   text: ' ${widget.userdata.email}.',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 17,
+                    fontFamily: 'Kollektif',
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),
@@ -183,7 +186,87 @@ class _NoCompaniesState extends State<NoCompanies> {
                         trailing: Padding(
                           padding: const EdgeInsets.only(right: 15.0),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final _firesbase = FirebaseFirestore.instance;
+                              await _firesbase
+                                  .collection('users')
+                                  .doc(widget.userdata.userId)
+                                  .update({
+                                'companies': FieldValue.arrayUnion([
+                                  {
+                                    'name': widget.userdata.invitation[index]
+                                        ['company'],
+                                    'company_id': widget.userdata
+                                        .invitation[index]['company_id'],
+                                    'selected': true,
+                                    'company_imgurl': widget
+                                        .userdata.invitation[index]['img_url'],
+                                  },
+                                ]),
+                                'projects': FieldValue.arrayUnion([
+                                  {
+                                    'company_id': widget.userdata
+                                        .invitation[index]['company_id'],
+                                    'project_id': widget.userdata
+                                        .invitation[index]['project_id'],
+                                  }
+                                ]),
+                                'invitation': FieldValue.arrayRemove(
+                                    [widget.userdata.invitation[index]]),
+                              });
+                              await _firesbase
+                                  .collection('companies')
+                                  .doc(widget.userdata.invitation[index]
+                                      ['company_id'])
+                                  .collection('members')
+                                  .where('email',
+                                      isEqualTo: widget.userdata.email)
+                                  .get()
+                                  .then((value) {
+                                _firesbase
+                                  ..collection('companies')
+                                      .doc(widget.userdata.invitation[index]
+                                          ['company_id'])
+                                      .collection('members')
+                                      .doc(value.docs.first.id)
+                                      .update({
+                                    'inv_accepted': true,
+                                    'userId': widget.userdata.userId,
+                                    'username': widget.userdata.username,
+                                  });
+                              });
+                              await _firesbase
+                                  .collection('companies')
+                                  .doc(widget.userdata.invitation[index]
+                                      ['company_id'])
+                                  .collection('Projects')
+                                  .doc(
+                                    widget.userdata.invitation[index]
+                                        ['project_id'],
+                                  )
+                                  .collection('members')
+                                  .where('email',
+                                      isEqualTo: widget.userdata.email)
+                                  .get()
+                                  .then((value) {
+                                _firesbase
+                                  ..collection('companies')
+                                      .doc(widget.userdata.invitation[index]
+                                          ['company_id'])
+                                      .collection('Projects')
+                                      .doc(
+                                        widget.userdata.invitation[index]
+                                            ['project_id'],
+                                      )
+                                      .collection('members')
+                                      .doc(value.docs.first.id)
+                                      .update({
+                                    'inv_accepted': true,
+                                    'userId': widget.userdata.userId,
+                                    'username': widget.userdata.username,
+                                  });
+                              });
+                            },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.green.shade900,
                               elevation: 0,

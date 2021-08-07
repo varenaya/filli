@@ -76,11 +76,11 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               .doc(docRef.id)
               .collection('members')
               .add({
-            'emails': widget.userdata.email,
+            'email': widget.userdata.email,
             'role': 'creater',
             'inv_accepted': true,
             'username': widget.userdata.username,
-            'userId': widget.userdata.username,
+            'userId': widget.userdata.userId,
           });
           data.emails.forEach((element) async {
             await _firestore
@@ -88,9 +88,11 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                 .doc(docRef.id)
                 .collection('members')
                 .add({
-              'emails': element,
+              'email': element,
               'role': 'member',
               'inv_accepted': false,
+              'username': '',
+              'userId': '',
             });
           });
         } else {
@@ -99,7 +101,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               .doc(docRef.id)
               .collection('members')
               .add({
-            'emails': widget.userdata.email,
+            'email': widget.userdata.email,
             'role': 'creater',
             'inv_accepted': true,
             'username': widget.userdata.username,
@@ -264,7 +266,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               .doc(projectdocRef.id)
               .collection('members')
               .add({
-            'emails': widget.userdata.email,
+            'email': widget.userdata.email,
             'role': 'creater',
             'inv_accepted': true,
             'username': widget.userdata.username,
@@ -278,8 +280,10 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                 .doc(projectdocRef.id)
                 .collection('members')
                 .add({
-              'emails': element,
+              'email': element,
               'role': 'member',
+              'username': '',
+              'userId': '',
               'inv_accepted': false,
             });
             await _firestore
@@ -296,6 +300,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
                     {
                       'img_url': '',
                       'company': data._companyname,
+                      'project_id': projectdocRef.id,
                       'company_id': docRef.id,
                       'invitedby': widget.userdata.username,
                     }
@@ -312,7 +317,7 @@ class _CreateLobbyScreenState extends State<CreateLobbyScreen> {
               .doc(projectdocRef.id)
               .collection('members')
               .add({
-            'emails': widget.userdata.email,
+            'email': widget.userdata.email,
             'role': 'creater',
             'inv_accepted': true,
             'username': widget.userdata.username,

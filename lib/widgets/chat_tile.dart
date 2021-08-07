@@ -64,7 +64,7 @@ class ChatTile extends StatelessWidget {
                                     text: TextSpan(
                                       text: chatdata['text'],
                                       style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 17,
                                         color: Colors.black87,
                                         fontFamily: 'Kollektif',
                                       ),
@@ -74,7 +74,7 @@ class ChatTile extends StatelessWidget {
                                               ? ' (edited)'
                                               : '',
                                           style: const TextStyle(
-                                            fontSize: 13,
+                                            fontSize: 14,
                                             color: Colors.black45,
                                             fontFamily: 'Kollektif',
                                             fontWeight: FontWeight.w100,
@@ -157,7 +157,7 @@ class ChatTile extends StatelessWidget {
                                     text: TextSpan(
                                       text: chatdata['text'],
                                       style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 17,
                                         color: Colors.black87,
                                         fontFamily: 'Kollektif',
                                       ),
@@ -167,7 +167,7 @@ class ChatTile extends StatelessWidget {
                                               ? ' (edited)'
                                               : '',
                                           style: const TextStyle(
-                                            fontSize: 13,
+                                            fontSize: 14,
                                             color: Colors.black45,
                                             fontFamily: 'Kollektif',
                                             fontWeight: FontWeight.w100,
@@ -225,6 +225,7 @@ class ChatTile extends StatelessWidget {
                         ),
                         Text(
                           '${DateFormat.jm().format(chatdata['createdAt'].toDate())}',
+                          style: TextStyle(),
                         ),
                       ],
                     ),
@@ -265,7 +266,7 @@ class ChatTile extends StatelessWidget {
                                   text: TextSpan(
                                     text: chatdata['text'],
                                     style: const TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 17,
                                       color: Colors.black87,
                                       fontFamily: 'Kollektif',
                                     ),
@@ -275,7 +276,7 @@ class ChatTile extends StatelessWidget {
                                             ? ' (edited)'
                                             : '',
                                         style: const TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 14,
                                           color: Colors.black45,
                                           fontFamily: 'Kollektif',
                                           fontWeight: FontWeight.w100,

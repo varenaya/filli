@@ -132,17 +132,18 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                                         leading: Container(
                                           width: 50,
                                           height: 50,
-                                          color: Colors.cyan.shade800,
-                                          child: Center(
-                                            child: Text(
-                                              companies[index]['name']
-                                                  .toLowerCase()
-                                                  .substring(0, 1),
-                                              style: TextStyle(
-                                                fontSize: 30,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w400,
-                                              ),
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: companies[index]
+                                                          ['company_imgurl'] ==
+                                                      ""
+                                                  ? AssetImage(
+                                                          'assets/images/Company_defimg.png')
+                                                      as ImageProvider
+                                                  : NetworkImage(
+                                                      companies[index]
+                                                          ['company_imgurl'],
+                                                    ),
                                             ),
                                           ),
                                         ),
@@ -225,17 +226,18 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                                           leading: Container(
                                             width: 50,
                                             height: 50,
-                                            color: Colors.cyan.shade800,
-                                            child: Center(
-                                              child: Text(
-                                                companies[index]['name']
-                                                    .toLowerCase()
-                                                    .substring(0, 1),
-                                                style: TextStyle(
-                                                  fontSize: 30,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: companies[index][
+                                                            'company_imgurl'] ==
+                                                        ""
+                                                    ? AssetImage(
+                                                            'assets/images/Company_defimg.png')
+                                                        as ImageProvider
+                                                    : NetworkImage(
+                                                        companies[index]
+                                                            ['company_imgurl'],
+                                                      ),
                                               ),
                                             ),
                                           ),
@@ -344,7 +346,125 @@ class _AddLobbyScreenState extends State<AddLobbyScreen> {
                                 trailing: Padding(
                                   padding: const EdgeInsets.only(right: 15.0),
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      final _firesbase =
+                                          FirebaseFirestore.instance;
+                                      final selectedcompanydata =
+                                          widget.userdata.companies.firstWhere(
+                                              (element) =>
+                                                  element['selected'] == true,
+                                              orElse: () => null);
+
+                                      await _firestore
+                                          .collection('users')
+                                          .doc(widget.userdata.userId)
+                                          .update({
+                                        'companies': FieldValue.arrayRemove(
+                                            [selectedcompanydata]),
+                                      }).then((value) async {
+                                        await _firestore
+                                            .collection('users')
+                                            .doc(widget.userdata.userId)
+                                            .update({
+                                          'companies': FieldValue.arrayUnion([
+                                            {
+                                              'name': invitations[index]
+                                                  ['company'],
+                                              'company_id': invitations[index]
+                                                  ['company_id'],
+                                              'selected': true,
+                                              'company_imgurl':
+                                                  invitations[index]['img_url'],
+                                            },
+                                            {
+                                              'name':
+                                                  selectedcompanydata['name'],
+                                              'company_id': selectedcompanydata[
+                                                  'company_id'],
+                                              'company_imgurl':
+                                                  selectedcompanydata[
+                                                      'company_imgurl'],
+                                              'selected': false,
+                                            }
+                                          ]),
+                                          'invitation': FieldValue.arrayRemove(
+                                              [invitations[index]]),
+                                          'projects': FieldValue.arrayUnion([
+                                            {
+                                              'company_id': widget.userdata
+                                                      .invitation[index]
+                                                  ['company_id'],
+                                              'project_id': widget.userdata
+                                                      .invitation[index]
+                                                  ['project_id'],
+                                            }
+                                          ]),
+                                        });
+                                      }).then((value) async {
+                                        await _firesbase
+                                            .collection('companies')
+                                            .doc(widget
+                                                    .userdata.invitation[index]
+                                                ['company_id'])
+                                            .collection('members')
+                                            .where('email',
+                                                isEqualTo:
+                                                    widget.userdata.email)
+                                            .get()
+                                            .then((value) {
+                                          _firesbase
+                                            ..collection('companies')
+                                                .doc(widget.userdata
+                                                        .invitation[index]
+                                                    ['company_id'])
+                                                .collection('members')
+                                                .doc(value.docs.first.id)
+                                                .update({
+                                              'inv_accepted': true,
+                                              'userId': widget.userdata.userId,
+                                              'username':
+                                                  widget.userdata.username,
+                                            });
+                                        });
+                                        await _firesbase
+                                            .collection('companies')
+                                            .doc(widget
+                                                    .userdata.invitation[index]
+                                                ['company_id'])
+                                            .collection('Projects')
+                                            .doc(
+                                              widget.userdata.invitation[index]
+                                                  ['project_id'],
+                                            )
+                                            .collection('members')
+                                            .where('email',
+                                                isEqualTo:
+                                                    widget.userdata.email)
+                                            .get()
+                                            .then((value) {
+                                          _firesbase
+                                            ..collection('companies')
+                                                .doc(widget.userdata
+                                                        .invitation[index]
+                                                    ['company_id'])
+                                                .collection('Projects')
+                                                .doc(
+                                                  widget.userdata
+                                                          .invitation[index]
+                                                      ['project_id'],
+                                                )
+                                                .collection('members')
+                                                .doc(value.docs.first.id)
+                                                .update({
+                                              'inv_accepted': true,
+                                              'userId': widget.userdata.userId,
+                                              'username':
+                                                  widget.userdata.username,
+                                            });
+                                        });
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       primary: Colors.green.shade900,
                                       elevation: 0,

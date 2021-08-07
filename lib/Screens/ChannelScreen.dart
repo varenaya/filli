@@ -76,7 +76,10 @@ class _ChannelScreenState extends State<ChannelScreen> {
       } on FirebaseException catch (err) {
         print(err.message);
       }
-      _textEditingController.clear();
+      setState(() {
+        _textEditingController.clear();
+        _enteredMessage = '';
+      });
     }
 
     return GestureDetector(
@@ -327,9 +330,8 @@ class _ChannelScreenState extends State<ChannelScreen> {
                                 Icons.send,
                                 color: Colors.white,
                               ),
-                              onPressed: _enteredMessage.trim().isEmpty
-                                  ? null
-                                  : _secondMessage,
+                              onPressed:
+                                  _enteredMessage == '' ? null : _secondMessage,
                             ),
                           ),
                         ],

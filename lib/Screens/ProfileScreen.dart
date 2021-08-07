@@ -151,6 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       style: TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.w600,
+                                        fontFamily: 'Kollektif',
                                         color: Colors.black,
                                       ),
                                     ),

@@ -1,3 +1,4 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:filli/services/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +15,110 @@ class Chatactions extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            color: Colors.amber,
+            color: Colors.white,
           ),
           height: 50,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              InkWell(
+                onTap: () {},
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade200,
+                  child: Text(
+                    '😃',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade200,
+                  child: Text(
+                    '👍',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade200,
+                  child: Text(
+                    '😎',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade200,
+                  child: Text(
+                    '🙂',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade200,
+                  child: Text(
+                    '😂',
+                    style: TextStyle(
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => EmojiPicker(
+                      onEmojiSelected: (category, emoji) {},
+                      config: Config(
+                          columns: 7,
+                          emojiSizeMax: 25.0,
+                          verticalSpacing: 0,
+                          horizontalSpacing: 0,
+                          initCategory: Category.RECENT,
+                          bgColor: Color(0xFFF2F2F2),
+                          indicatorColor: Colors.blue,
+                          iconColor: Colors.grey,
+                          iconColorSelected: Colors.blue,
+                          progressIndicatorColor: Colors.blue,
+                          showRecentsTab: true,
+                          recentsLimit: 28,
+                          noRecentsText: "No Recents",
+                          noRecentsStyle: const TextStyle(
+                              fontSize: 20, color: Colors.black26),
+                          categoryIcons: const CategoryIcons(),
+                          buttonMode: ButtonMode.MATERIAL),
+                    ),
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.emoji_emotions_outlined,
+                    color: Colors.black,
+                    size: 28,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         if (userdata.userId == chatdata['senderId'])
           ListTile(
